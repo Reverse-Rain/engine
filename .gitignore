@@ -1,0 +1,26 @@
+# Ignore environment variable files
+.env
+.env.*
+*.env
+
+
+# Ignore credential filesx
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*.cert
+*.credentials
+*.secret
+*.secrets
+*.token
+*.tokens
+
+# Ignore config files that may contain secrets
+config.json
+config.yaml
+config.yml
+settings.json
+settings.yaml
+settings.yml
