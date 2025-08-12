@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% block title %}Milestones - {{ label|capitalize }}{% endblock %}
+{% block content %}
+<div style="max-width:1000px;margin:40px auto;padding:32px 28px;background:#fff;border-radius:12px;box-shadow:0 2px 14px #0002;">
+  <h2 style="color:#1976d2;margin-top:0;">Milestone: {{ label|capitalize }}</h2>
+
+  {% if label|lower == 'hiring_success_rate' %}
+  <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;align-items:flex-start;margin-top:8px;">
+    <div style="flex:1 1 340px;max-width:420px;text-align:center;">
+      <h3 style="color:#1976d2;font-size:1.05rem;margin-bottom:8px;">Hiring Success Rate Breakdown</h3>
+      <canvas id="successRateChart" width="320" height="320"></canvas>
+      <div style="margin-top:12px;font-size:0.95rem;line-height:1.4;">
+        <b>{{ total_applicants }}</b> applicants • <b>{{ total_hired }}</b> hired • <b>{{ success_rate }}%</b> success
+      </div>
+    </div>
+    <div style="flex:1 1 340px;max-width:420px;text-align:center;">
+      <h3 style="color:#1976d2;font-size:1.05rem;margin-bottom:8px;">Hired Candidates by Department</h3>
+      <canvas id="deptSuccessChart" width="340" height="320"></canvas>
+      <div style="color:#777;font-size:0.85rem;margin-top:6px;">Click a point / label to list hired candidates</div>
+    </div>
+  </div>
+  {% elif label|lower == 'hired' %}
+  <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;align-items:flex-start;">
+    <div style="flex:1 1 340px;max-width:420px;text-align:center;">
+      <h3 style="color:#1976d2;font-size:1.05rem;margin-bottom:8px;">Hiring Milestone Analytics</h3>
+      <canvas id="triangleChart" width="320" height="320"></canvas>
+      <div style="margin-top:12px;font-size:0.95rem;line-height:1.4;">
+        Applicants: <b>{{ total_applicants }}</b><br>Hired: <b>{{ total_hired }}</b><br>Success Rate: <b>{{ success_rate }}%</b>
+      </div>
+    </div>
+  </div>
+  {% elif label|lower == 'total_vacancies' %}
+  <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;align-items:flex-start;">
+    <div style="flex:1 1 340px;max-width:420px;text-align:center;">
+      <h3 style="color:#1976d2;font-size:1.05rem;margin-bottom:8px;">Vacancy Status Breakdown</h3>
+      <canvas id="vacancyStatusChart" width="320" height="320"></canvas>
+      <div style="margin-top:12px;font-size:0.95rem;line-height:1.4;">
+        Open: <b>{{ open_vacancies }}</b> • Closed: <b>{{ closed_vacancies }}</b> • Jobs: <b>{{ total_jobs }}</b>
+      </div>
+    </div>
+    <div style="flex:1 1 340px;max-width:420px;text-align:center;">
+      <h3 style="color:#1976d2;font-size:1.05rem;margin-bottom:8px;">Jobs per Department</h3>
+      <canvas id="deptRadarChart" width="340" height="320"></canvas>
+      <div style="color:#777;font-size:0.85rem;margin-top:6px;">Click a point to list jobs</div>
+    </div>
+  </div>
+  {% elif label|lower == 'hiring_pace' %}
+  <div style="overflow-x:auto;margin-top:12px;">
+    <table class="table table-sm" style="min-width:780px;font-size:0.85rem;">
+      <thead class="table-light"><tr>
+        <th>Job Title</th><th>Dept</th><th>Posted</th><th>Weeks</th><th>Stages</th><th>Applicants</th><th>Status</th><th>Pace</th>
+      </tr></thead>
+      <tbody>
+      {% for r in hiring_pace_details %}
+        <tr>
+          <td>{{ r.job_title }}</td>
+          <td>{{ r.department }}</td>
+          <td>{{ r.posted_at }}</td>
+            <td>{{ r.weeks_elapsed }}</td>
+          <td>{{ r.stages_completed }}</td>
+          <td>{{ r.applicants_count }}</td>
+          <td>{{ r.candidate_status }}</td>
+          <td><span class="pace-badge badge" style="background:#555;">{{ r.pace }}</span></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;align-items:flex-start;">
+    <div style="flex:1 1 340px;max-width:460px;text-align:center;">
+      <h3 style="color:#1976d2;font-size:1.05rem;margin-bottom:8px;">Applicants per Department</h3>
+      <canvas id="deptRadarChart" width="360" height="320"></canvas>
+      <div style="color:#777;font-size:0.85rem;margin-top:6px;">Click a point to list applicants</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Department applicants / jobs listing -->
+  <div id="deptApplicantsTableWrapper" style="display:none;margin-top:36px;">
+    <h3 id="deptApplicantsTitle" style="color:#1976d2;font-size:1.05rem;margin-bottom:12px;">Department Listing</h3>
+    <div style="overflow-x:auto;">
+      <table id="deptApplicantsTable" class="table table-bordered table-sm" style="min-width:760px;font-size:0.8rem;">
+        <thead class="table-light">
+          <tr>
+            <th style="width:25%;">Name / Job</th>
+            <th style="width:18%;">Department</th>
+            <th style="width:12%;">Status</th>
+            <th style="width:15%;">Applied / Posted</th>
+            <th style="width:15%;">Action / Openings</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- JSON data (single payload) -->
+  <script id="milestone-data" type="application/json">{
+    "label": "{{ label|lower }}",
+    "dept_labels": {{ dept_labels_json|safe }},
+    "dept_counts": {{ dept_counts_json|safe }},
+    "candidates": {{ candidates_json|safe }},
+    "metrics": {
+      "total_applicants": {{ total_applicants|default(0) }},
+      "total_hired": {{ total_hired|default(0) }},
+      "success_rate": {{ success_rate|default(0) }},
+      "open_vacancies": {{ open_vacancies|default(0) }},
+      "closed_vacancies": {{ closed_vacancies|default(0) }},
+      "total_jobs": {{ total_jobs|default(0) }}
+    }
+  }</script>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-Js6dX6Rtoy1ZQ2A6dpBi9BKkfGTq/pdyzta33fue2QEAnYMiVjCdp9R9fU3p6P8M" crossorigin="anonymous"></script>
+  <!-- Fallback loader if primary CDN blocked -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function(){
+      function ready(){ document.dispatchEvent(new Event('chartjs-ready')); }
+      if(window.Chart){ console.log('[Milestones] Chart.js primary loaded'); ready(); return; }
+      console.warn('[Milestones] Chart.js primary failed or slow, loading fallback...');
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+      s.onload=function(){ console.log('[Milestones] Fallback Chart.js loaded'); ready(); };
+      s.onerror=function(){ console.error('[Milestones] Failed to load Chart.js from both CDNs'); };
+      document.head.appendChild(s);
+    });
+  </script>
+
+  <!-- Charts & interactions -->
+  <script>
+    document.addEventListener('chartjs-ready', function(){
+      if(!window.Chart){ console.error('[Milestones] Chart.js still missing, aborting chart init'); return; }
+      const payloadEl = document.getElementById('milestone-data');
+      if(!payloadEl){return;}
+      const data = JSON.parse(payloadEl.textContent || '{}');
+      const labelLower = data.label || '';
+      const deptLabels = data.dept_labels || [];
+      const deptCounts = data.dept_counts || [];
+      const MILESTONE_METRICS = data.metrics || {};
+      window.allCandidates = data.candidates || [];
+      console.debug('[Milestones] Init', {labelLower, deptLabelsCount:deptLabels.length, deptCountsSample:deptCounts.slice(0,5), metrics:MILESTONE_METRICS});
+
+      function pct(part, total){return total? Math.round(part/total*100):0;}
+
+      function makePolar(){
+        const el = document.getElementById('triangleChart');
+        if(!el) return;
+        new Chart(el.getContext('2d'), {type:'polarArea', data:{labels:['Applicants','Hired','Success %'], datasets:[{data:[MILESTONE_METRICS.total_applicants||0, MILESTONE_METRICS.total_hired||0, MILESTONE_METRICS.success_rate||0], backgroundColor:['rgba(25,118,210,.70)','rgba(0,200,83,.70)','rgba(255,193,7,.70)'], borderColor:['#1976d2','#00c853','#ffc107'], borderWidth:2}]}, options:{responsive:false, plugins:{legend:{position:'bottom'}}}});
+      }
+
+      function makeSuccessCharts(){
+        const sr = document.getElementById('successRateChart');
+        if(sr){
+          const notHired = (MILESTONE_METRICS.total_applicants||0) - (MILESTONE_METRICS.total_hired||0);
+          new Chart(sr.getContext('2d'), {type:'doughnut', data:{labels:['Hired','Not Hired'], datasets:[{data:[MILESTONE_METRICS.total_hired||0, notHired], backgroundColor:['rgba(67,160,71,.85)','rgba(244,67,54,.85)'], borderColor:['#43a047','#f44336'], borderWidth:3}]}, options:{responsive:false, plugins:{legend:{position:'bottom'}}}});
+        }
+        const ds = document.getElementById('deptSuccessChart');
+        if(ds && deptLabels.length){
+          new Chart(ds.getContext('2d'), {type:'radar', data:{labels:deptLabels, datasets:[{label:'Dept Success %', data:deptCounts, fill:true, backgroundColor:'rgba(156,39,176,0.18)', borderColor:'#9c27b0', pointBackgroundColor:'#9c27b0'}]}, options:{scales:{r:{suggestedMin:0, suggestedMax:Math.max(...deptCounts,5)}}, plugins:{legend:{display:false}}, onClick:(e)=>{const c=Chart.getChart(ds); const pts=c.getElementsAtEventForMode(e,'nearest',{intersect:true},true); if(pts.length){showDeptApplicants(deptLabels[pts[0].index]);}}}});
+        }
+      }
+
+      function makeVacancy(){
+        const el = document.getElementById('vacancyStatusChart');
+        if(!el) return;
+        new Chart(el.getContext('2d'), {type:'doughnut', data:{labels:['Open','Closed'], datasets:[{data:[MILESTONE_METRICS.open_vacancies||0, MILESTONE_METRICS.closed_vacancies||0], backgroundColor:['rgba(67,160,71,.85)','rgba(244,67,54,.85)'], borderColor:['#43a047','#f44336'], borderWidth:2}]}, options:{responsive:false, plugins:{legend:{position:'bottom'}}}});
+      }
+
+      function makeRadarGeneric(){
+        const el = document.getElementById('deptRadarChart');
+        if(!el || !deptLabels.length) return;
+        new Chart(el.getContext('2d'), {type:'radar', data:{labels:deptLabels, datasets:[{label:(labelLower==='total_vacancies'?'Jobs':'Applicants'), data:deptCounts, fill:true, backgroundColor:'rgba(25,118,210,0.17)', borderColor:'#1976d2', pointBackgroundColor:'#1976d2'}]}, options:{scales:{r:{suggestedMin:0, suggestedMax:Math.max(...deptCounts,5)}}, plugins:{legend:{display:false}}, onClick:(e)=>{const c=Chart.getChart(el); const pts=c.getElementsAtEventForMode(e,'nearest',{intersect:true},true); if(pts.length){showDeptApplicants(deptLabels[pts[0].index]);}}}});
+      }
+
+      function showDeptApplicants(dept){
+        const wrap = document.getElementById('deptApplicantsTableWrapper');
+        const title = document.getElementById('deptApplicantsTitle');
+        const tbody = document.querySelector('#deptApplicantsTable tbody');
+        if(!wrap||!tbody) return;
+        tbody.innerHTML='';
+        let rows=[];
+        if(labelLower==='total_vacancies'){
+          rows = allCandidates.filter(c=> (c.department||'Unknown')===dept);
+          title.textContent = `Jobs in "${dept}"`;
+          if(!rows.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#888;">No jobs in this department.</td></tr>';}
+          else rows.forEach(j=>{const tr=document.createElement('tr'); tr.innerHTML=`<td>${j.job_title}</td><td>${j.department}</td><td>${j.status}</td><td>${j.applied_date||''}</td><td>${j.openings||''}</td>`; tbody.appendChild(tr);});
+        } else if(labelLower==='hiring_success_rate'){
+          rows = allCandidates.filter(c=> (c.department||'Unknown')===dept && (c.status||'').toLowerCase()==='hired');
+          title.textContent = `Hired in "${dept}"`;
+          if(!rows.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#888;">No hired candidates.</td></tr>';}
+          else rows.forEach(c=>{const tr=document.createElement('tr'); tr.innerHTML=`<td>${c.name}</td><td>${c.department}</td><td>${c.status}</td><td>${c.applied_date||''}</td><td><a class='btn btn-primary btn-sm' href='/candidate/${c.id}'>View</a></td>`; tbody.appendChild(tr);});
+        } else {
+          rows = allCandidates.filter(c=> (c.department||'Unknown')===dept);
+          title.textContent = `Applicants in "${dept}"`;
+          if(!rows.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#888;">No applicants.</td></tr>';}
+          else rows.forEach(c=>{const tr=document.createElement('tr'); tr.innerHTML=`<td>${c.name}</td><td>${c.department}</td><td>${c.status}</td><td>${c.applied_date||''}</td><td><a class='btn btn-primary btn-sm' href='/candidate/${c.id}'>View</a></td>`; tbody.appendChild(tr);});
+        }
+        wrap.style.display='block';
+        window.scrollTo({top:wrap.offsetTop-80, behavior:'smooth'});
+      }
+  window.showDeptApplicants = showDeptApplicants; // expose
+
+      // Render
+      if(labelLower==='hired') makePolar();
+      else if(labelLower==='hiring_success_rate') makeSuccessCharts();
+      else if(labelLower==='total_vacancies'){ makeVacancy(); makeRadarGeneric(); }
+      else if(labelLower==='hiring_pace') {/* charts not needed */}
+      else makeRadarGeneric();
+
+      // Pace badge coloring
+      document.querySelectorAll('.pace-badge').forEach(b=>{
+        const p=(b.textContent||'').trim().toLowerCase();
+        b.classList.add(p.startsWith('excell')?'pace-excellent': p==='good'?'pace-good': p==='adequate'?'pace-adequate':'pace-inadequate');
+      });
+  });
+  </script>
+
+  <style>
+    .pace-excellent{background:#2e7d32;color:#fff;}
+    .pace-good{background:#43a047;color:#fff;}
+    .pace-adequate{background:#ff9800;color:#fff;}
+    .pace-inadequate{background:#f44336;color:#fff;}
+  </style>
+</div>
+{% endblock %}

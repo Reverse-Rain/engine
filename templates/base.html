@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notifications.css') }}">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+
+
+
+    <div class="dashboard-layout">
+        <div class="main-content">
+            <!-- Logo Header - appears on every page -->
+            {% include '_logo_header.html' %}
+            
+            {% block content %}
+            <!-- Page-specific content will be injected here -->
+            {% endblock %}
+        </div>
+        <nav class="bottom-nav">
+            {% set nav_icons = [
+                {'href': '/', 'icon': 'home.png', 'label': 'Dashboard'},
+                {'href': '/post_jobs', 'icon': 'jobs.png', 'label': 'post jobs'},
+                {'href': '/manage_hr_team', 'icon': 'team.png', 'label': 'Team & Approvals'},
+                {'href': '/my_approvals', 'icon': 'notification.png', 'label': 'My Approvals'},
+                {'href': '/jobs_list', 'icon': 'search.png', 'label': 'jobs'},
+                {'href': '/manage_candidates', 'icon': 'candidates.png', 'label': 'Candidates'},
+                {'href': '/manage_onboarding', 'icon': 'onboarding.png', 'label': 'Onboarding'},
+                {'href': '/chatbot', 'icon': 'chatbot.png', 'label': 'Chatbot'},
+                {'href': '/profile', 'icon': 'settings.png', 'label': 'Profile'},
+                {'href': '/logout', 'icon': 'logout.png', 'label': 'Logout'}
+            ] %}
+            {% for nav in nav_icons %}
+                <a href="{{ nav.href }}" class="nav-icon" title="{{ nav.label }}">
+                    <div class="nav-icon-bg">
+                        <img src="{{ url_for('static', filename='images/' ~ nav.icon) }}" alt="{{ nav.label }}">
+                    </div>
+                </a>
+            {% endfor %}
+        </nav>
+    </div>
+
+    <style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        font-family: 'Poppins', Arial, Helvetica, sans-serif;
+        color: #23272f;
+    }
+    *, *::before, *::after {
+        font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+    }
+    body {
+        min-height: 100vh;
+        min-width: 100vw;
+        background: #f8fafc;
+    }
+    .dashboard-layout {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    .main-content {
+        flex: 1;
+        width: 100vw;
+        margin: 0;
+        padding: 8px 0 40px 0;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-width: 100vw;
+        min-height: 0;
+    }
+    .bottom-nav {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 38px;
+        background: #fff;
+        box-shadow: 0 -1px 8px 0 rgba(25, 118, 210, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        z-index: 1000;
+        border-radius: 0;
+        padding: 0;
+        gap: 0;
+        overflow: visible;
+        min-height: 0;
+        max-width: 100vw;
+        border-top: 1px solid #e5e7eb;
+    }
+    .bottom-nav .nav-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 0;
+        height: 100%;
+        text-decoration: none;
+        color: #1976d2;
+        transition: background 0.12s;
+        padding: 0;
+        min-width: 32px;
+        max-width: 40px;
+    }
+    .bottom-nav .nav-icon-bg {
+        background: transparent;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.14s;
+    }
+    .bottom-nav .nav-icon:active .nav-icon-bg,
+    .bottom-nav .nav-icon:hover .nav-icon-bg {
+        background: #f3f6fa;
+    }
+    .bottom-nav .nav-icon img {
+        width: 16px;
+        height: 16px;
+        display: block;
+        margin: 0;
+        filter: none;
+        transition: transform 0.13s;
+    }
+    @media (min-width: 900px) {
+        .bottom-nav {
+            max-width: 480px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 18px 18px 18px 18px;
+        }
+    }
+    </style>
+
+    <!-- AI Popup HTML always present -->
+    <div id="ai-popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:transparent; z-index:9999; justify-content:center; align-items:center;">
+      <div id="ai-popup" style="background:rgba(255,255,255,0.38); border-radius:18px; box-shadow:0 8px 32px 0 rgba(31,38,135,0.18); width:95vw; max-width:440px; min-width:240px; height:80vh; max-height:500px; min-height:320px; display:flex; flex-direction:column; position:fixed; top:10vh; left:calc(50vw - 220px); z-index:10000; border:1.5px solid rgba(255,255,255,0.35); backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2); overflow:hidden;">
+        <div id="ai-popup-header" style="cursor:move; padding:14px 18px; border-bottom:1.5px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:space-between; border-radius:12px 12px 0 0; background:rgba(255,255,255,0.22); backdrop-filter: blur(12px) saturate(1.2); -webkit-backdrop-filter: blur(12px) saturate(1.2); box-shadow:0 2px 8px 0 rgba(31,38,135,0.06);">
+          <span style="font-weight:600; font-size:1.1rem; letter-spacing:0.5px; color:#222; text-shadow:0 1px 4px #fff8;">AI Assistant</span>
+          <button onclick="document.getElementById('ai-popup-overlay').style.display='none'" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:#444; padding:0 6px; border-radius:6px; transition:background 0.2s;">&times;</button>
+        </div>
+        <iframe src="http://127.0.0.1:5001" style="border:none; width:100%; height:100%; min-height:220px; border-radius:0 0 12px 12px; flex:1 1 auto; background:transparent;"></iframe>
+        <style>
+        /* Glassmorphic input for chatbot inside iframe */
+        #ai-popup iframe { background: transparent !important; }
+        #ai-popup::-webkit-input-placeholder, #ai-popup input::placeholder {
+          color: #2229;
+        }
+        #ai-popup input[type="text"], #ai-popup .chat-input {
+          background: rgba(255,255,255,0.32) !important;
+          border: 1.2px solid rgba(255,255,255,0.32) !important;
+          border-radius: 10px !important;
+          box-shadow: 0 2px 8px 0 rgba(31,38,135,0.06);
+          color: #222 !important;
+          padding: 10px 14px !important;
+          font-size: 1em;
+          outline: none;
+          transition: border 0.2s, box-shadow 0.2s;
+        }
+        #ai-popup input[type="text"]:focus, #ai-popup .chat-input:focus {
+          border: 1.5px solid #8B5CF6 !important;
+          background: rgba(255,255,255,0.48) !important;
+        }
+        </style>
+      </div>
+    </div>
+    <script>
+    // Make the AI popup draggable by its header
+    (function() {
+      const popup = document.getElementById('ai-popup');
+      const header = document.getElementById('ai-popup-header');
+      let offsetX = 0, offsetY = 0, isDragging = false;
+      header.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        offsetX = e.clientX - popup.getBoundingClientRect().left;
+        offsetY = e.clientY - popup.getBoundingClientRect().top;
+        document.body.style.userSelect = 'none';
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        let x = e.clientX - offsetX;
+        let y = e.clientY - offsetY;
+        // Keep within viewport
+        x = Math.max(0, Math.min(window.innerWidth - popup.offsetWidth, x));
+        y = Math.max(0, Math.min(window.innerHeight - popup.offsetHeight, y));
+        popup.style.left = x + 'px';
+        popup.style.top = y + 'px';
+      });
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+        document.body.style.userSelect = '';
+      });
+    })();
+    // Sidebar AJAX navigation for dashboard only
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+          sidebar.addEventListener('click', function(e) {
+              if (e.target.closest('form')) return;
+              const target = e.target.closest('a');
+              if (target && target.getAttribute('href').startsWith('/')) {
+                  e.preventDefault();
+                  fetch(target.getAttribute('href'), {
+                      headers: {'X-Requested-With': 'XMLHttpRequest'},
+                      credentials: 'same-origin'
+                  })
+                  .then(response => response.text())
+                  .then(html => {
+                      const parser = new DOMParser();
+                      const doc = parser.parseFromString(html, 'text/html');
+                      let newContent = doc.querySelector('.main-content');
+                      if (newContent) {
+                          document.querySelector('.main-content').innerHTML = newContent.innerHTML;
+                          document.dispatchEvent(new Event('main-content-updated'));
+                      } else {
+                          document.querySelector('.main-content').innerHTML = html;
+                          document.dispatchEvent(new Event('main-content-updated'));
+                      }
+                  });
+              }
+          });
+        }
+        // Global key binding for AI popup
+        document.addEventListener('keydown', function(e) {
+          if ((e.altKey || e.ctrlKey) && (e.key === 'q' || e.key === 'Q')) {
+            document.getElementById('ai-popup-overlay').style.display = 'flex';
+          }
+        });
+    });
+    </script>
+    
+    <!-- Notification System -->
+    <script src="{{ url_for('static', filename='js/notifications.js') }}"></script>
+</body>
+</html>

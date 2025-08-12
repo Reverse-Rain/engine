@@ -1,0 +1,1143 @@
+{% extends 'base.html' %}
+{% block title %}Job Details{% endblock %}
+{% block content %}
+<style>
+  .job-card {
+    width: 100%;
+    margin: 24px 0 0 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px 0 rgba(60,72,88,0.08);
+    padding: 28px 3vw 22px 3vw;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    border: 1.2px solid #e0e0e0;
+    box-sizing: border-box;
+    letter-spacing: 0.05px;
+    text-align: left;
+  }
+  .job-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: none;
+  }
+  .job-table th, .job-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+    font-size: 1.01rem;
+  }
+  .job-table th {
+    background: #f5f5f5;
+    font-weight: 600;
+    color: #232323;
+    border-top: 1px solid #f0f0f0;
+    width: 180px;
+  }
+  .job-table tr:last-child td {
+    border-bottom: none;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #232323;
+    margin: 24px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #007acc;
+    display: flex;
+    align-items: center;
+  }
+  
+  .candidates-section {
+    margin: 24px 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .upload-section {
+    background: #f8f9fa;
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .upload-section .section-subtitle {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .upload-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .upload-form input[type="file"] {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .upload-form .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    background: #007acc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .upload-form .btn:hover {
+    background: #005999;
+  }
+  
+  .api-note {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #856404;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .candidates-list {
+  .candidate-status-box {
+    cursor: pointer;
+    background: #f5faff;
+    border: 1px solid #b3d7f5;
+    border-radius: 8px;
+    padding: 10px 18px;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 1px 4px 0 #007acc11;
+    margin-bottom: 0;
+  }
+    padding: 16px;
+  }
+  
+  .candidates-grid {
+    display: grid;
+    gap: 12px;
+  }
+  
+  .candidate-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: box-shadow 0.2s;
+  }
+  
+  .candidate-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .candidate-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+  
+  .candidate-avatar {
+    font-size: 1.2rem;
+  }
+  
+  .candidate-details h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #232323;
+  }
+  
+  .candidate-details p {
+    margin: 2px 0 0 0;
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
+  .candidate-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  .status-new { background: #e3f2fd; color: #1976d2; }
+  .status-shortlisted { background: #fff3e0; color: #f57c00; }
+  .status-interviewed { background: #f3e5f5; color: #7b1fa2; }
+  .status-interview-scheduled { background: #f3e5f5; color: #7b1fa2; }
+  .status-interview-analyzed { background: #f3e5f5; color: #7b1fa2; }
+  .status-hired { background: #e8f5e8; color: #388e3c; }
+  .status-selected { background: #e8f5e8; color: #388e3c; }
+  .status-approved { background: #e8f5e8; color: #388e3c; }
+  .status-rejected { background: #ffebee; color: #d32f2f; }
+  .status-pending { background: #fff8e1; color: #f9a825; }
+  .status-pending-approval { background: #fff8e1; color: #f9a825; }
+  .status-on-hold { background: #f5f5f5; color: #616161; }
+  
+  .view-profile-btn {
+    padding: 6px 12px;
+    background: #007acc;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+  }
+  
+  .view-profile-btn:hover {
+    background: #005999;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .no-candidates {
+    text-align: center;
+    padding: 32px;
+    color: #666;
+    font-style: italic;
+  }
+  
+  /* Job Status Info Popup Styles */
+  .status-info-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .status-info-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+  
+  .status-info-btn:hover {
+    background: #0056b3;
+  }
+  
+  /* Candidate Statistics Tree Styles */
+  .candidate-stats-tree {
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .stats-header {
+    background: #f8f9fa;
+    padding: 14px 18px;
+    border-bottom: 1px solid #e1e5e9;
+    font-weight: 600;
+    color: #343a40;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .stats-tree {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+  }
+  
+  .stats-node {
+    position: relative;
+    border-bottom: 1px solid #f1f3f4;
+  }
+  
+  .stats-node:last-child {
+    border-bottom: none;
+  }
+  
+  .stats-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    background: #ffffff;
+    position: relative;
+  }
+  
+  .stats-item:hover {
+    background: #f8f9fa;
+  }
+  
+  .stats-item.active {
+    background: #e3f2fd;
+  }
+  
+  .stats-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    color: #495057;
+    font-size: 0.9rem;
+  }
+  
+  .stats-icon {
+    font-size: 12px;
+    transition: transform 0.2s ease;
+    color: #6c757d;
+    width: 14px;
+    text-align: center;
+  }
+  
+  .stats-icon.expanded {
+    transform: rotate(90deg);
+    color: #007bff;
+  }
+  
+  .stats-count {
+    background: #007bff;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-width: 22px;
+    text-align: center;
+  }
+  
+  .stats-count.zero {
+    background: #6c757d;
+  }
+  
+  .stats-dropdown {
+    display: none;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 0;
+  }
+  
+  .stats-dropdown.show {
+    display: block;
+  }
+  
+  .dropdown-candidates {
+    list-style: none;
+    margin: 0;
+    padding: 12px;
+  }
+  
+  .dropdown-candidate {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+  }
+  
+  .dropdown-candidate:last-child {
+    margin-bottom: 0;
+  }
+  
+  .dropdown-candidate:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: #007bff;
+  }
+  
+  .dropdown-candidate-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+  
+  .dropdown-candidate-avatar {
+    font-size: 1.1rem;
+    width: 32px;
+    height: 32px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dee2e6;
+  }
+  
+  .dropdown-candidate-details h5 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #212529;
+    line-height: 1.2;
+  }
+  
+  .dropdown-candidate-details p {
+    margin: 2px 0 0 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+    line-height: 1.3;
+  }
+  
+  .dropdown-view-btn {
+    padding: 6px 12px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropdown-view-btn:hover {
+    background: #0056b3;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .empty-state {
+    padding: 16px;
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.85rem;
+    background: #ffffff;
+    border-radius: 4px;
+    border: 1px dashed #dee2e6;
+    margin: 12px;
+  }
+  
+  .status-popup {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 280px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  .status-popup.show {
+    display: block;
+  }
+  
+  .popup-header {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 6px;
+  }
+  
+  .popup-item {
+    margin: 4px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .popup-label {
+    color: #666;
+  }
+  
+  .popup-value {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .status-indicator {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  .status-open {
+    background: #d4edda;
+    color: #155724;
+  }
+  
+  .status-closed {
+    background: #f8d7da;
+    color: #721c24;
+  }
+  
+  .status-expired {
+    background: #fff3cd;
+    color: #856404;
+  }
+  
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1976d2;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .form-section {
+    background: #f8f9fa;
+    border-radius: 7px;
+    padding: 16px 18px 12px 18px;
+    margin-bottom: 14px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px 0 rgba(60,72,88,0.03);
+  }
+  /* === Filter Animation Styles === */
+  .fade-in { animation: fadeInRow 0.28s cubic-bezier(.4,.14,.3,1) forwards; }
+  .fade-out { animation: fadeOutRow 0.22s cubic-bezier(.55,.06,.68,.19) forwards; }
+  @keyframes fadeInRow {
+    0% { opacity:0; transform:translateY(16px); }
+    100% { opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeOutRow {
+    0% { opacity:1; transform:translateY(0); }
+    100% { opacity:0; transform:translateY(-12px); }
+  }
+  .cand-row.fade-in, .tree-candidate.fade-in, .cand-row.fade-out, .tree-candidate.fade-out { will-change: transform, opacity; }
+  tbody#candidatesTbody .cand-row.fade-in { animation-delay: calc(var(--seq-index, 0) * 36ms); }
+  tbody#candidatesTbody .cand-row.fade-out { animation-delay: calc(var(--seq-index, 0) * 36ms); }
+  #groupedView .tree-candidate.fade-in { animation-delay: calc(var(--seq-index, 0) * 36ms); }
+  #groupedView .tree-candidate.fade-out { animation-delay: calc(var(--seq-index, 0) * 36ms); }
+  .animating { pointer-events:none; }
+</style>
+
+<script>
+function toggleStatusPopup(event) {
+  event.stopPropagation();
+  const popup = document.getElementById('statusPopup');
+  const button = event.target;
+  
+  if (popup.classList.contains('show')) {
+    popup.classList.remove('show');
+  } else {
+    // Position popup near the button
+    const rect = button.getBoundingClientRect();
+    popup.style.left = (rect.left - 140) + 'px';
+    popup.style.top = (rect.bottom + 5) + 'px';
+    popup.classList.add('show');
+  }
+}
+
+// Toggle candidate stats dropdown
+function toggleStatsDropdown(event, statusType) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  const dropdown = document.getElementById(`dropdown-${statusType}`);
+  const icon = event.currentTarget.querySelector('.stats-icon');
+  const item = event.currentTarget;
+  
+  // Toggle current dropdown only (allow multiple open)
+  if (dropdown.classList.contains('show')) {
+    dropdown.classList.remove('show');
+    icon.classList.remove('expanded');
+    item.classList.remove('active');
+  } else {
+    dropdown.classList.add('show');
+    icon.classList.add('expanded');
+    item.classList.add('active');
+  }
+}
+
+// Close popup when clicking outside
+document.addEventListener('click', function(event) {
+  const popup = document.getElementById('statusPopup');
+  if (popup && !popup.contains(event.target) && !event.target.classList.contains('status-info-btn')) {
+    popup.classList.remove('show');
+  }
+  
+  // Don't auto-close stats dropdowns - let users manually toggle them
+  // This allows multiple dropdowns to be open simultaneously
+});
+</script>
+
+<style>
+  label {
+    font-weight: 500;
+    color: #222;
+    margin-bottom: 4px;
+    display: block;
+    font-size: 0.98rem;
+  }
+  input[type="file"], select {
+    margin-bottom: 10px;
+    padding: 6px 8px;
+    border: 1px solid #cfd8dc;
+    border-radius: 4px;
+    font-size: 0.98rem;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border 0.2s;
+  }
+  input[type="file"]:focus, select:focus {
+    border: 1.5px solid #1976d2;
+    outline: none;
+  }
+  .btn {
+    background: #f5f5f5;
+    color: #222;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 7px 18px;
+    font-size: 0.98rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 5px;
+    box-shadow: 0 1px 2px 0 rgba(60,72,88,0.06);
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn:hover {
+    background: #e0e0e0;
+    color: #111;
+  }
+  .candidates-list {
+    background: #f8f9fa;
+    border-radius: 7px;
+    padding: 14px 18px 10px 18px;
+    border: 1px solid #e5e7eb;
+    margin-top: 18px;
+    box-shadow: 0 1px 2px 0 rgba(60,72,88,0.03);
+  }
+  .candidates-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .candidates-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 1.01rem;
+    color: #222;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .candidates-list li:last-child {
+    border-bottom: none;
+  }
+</style>
+
+<div class="job-card" style="margin-top: 5%;">
+  <div class="job-title">Job Details</div>
+  <table class="job-table">
+  <!-- CV Upload Form -->
+  <div class="upload-section" style="margin-bottom: 24px;">
+    <div class="section-subtitle">Upload Candidate CV for this Job</div>
+    <form class="upload-form" method="post" action="{{ url_for('upload_cv', job_id=job['job_id']) }}" enctype="multipart/form-data">
+      <input type="file" name="cv_file" accept=".pdf,.doc,.docx,.txt" required>
+      <button type="submit" class="btn">Upload & Analyze</button>
+    </form>
+    <div class="api-note">CV will be analyzed using AI and matched with the Job Description.</div>
+  </div>
+    <tbody>
+      {% set field_map = {
+        'job_id': 'Job ID',
+        'job_title': 'Job Title',
+        'job_description': 'Job Description',
+        'job_location': 'Job Location',
+        'job_type': 'Job Type',
+        'job_requirements': 'Job Requirements',
+        'job_openings': 'Job Openings',
+        'job_posted_by': 'Job Posted By',
+        'job_lead_time': 'Job Lead Time ',
+        'department': 'Department',
+        'seniority_level': 'Seniority Level',
+        'salary_range': 'Salary Range',
+        'jd_file_path': 'JD File',
+        'posted_at': 'Posted At',
+        'status': 'Status'
+      } %}
+      {% for key, label in field_map.items() %}
+        <tr>
+          <th>{{ label }}</th>
+          {% set value = job.get(key, '') %}
+          <td>
+        {% if key == 'status' %}
+          <div class="status-info-container">
+            <span>{{ value }}</span>
+            <button type="button" class="status-info-btn" onclick="toggleStatusPopup(event)" title="Job Status Information">i</button>
+          </div>
+        {% elif key == 'job_lead_time' %}
+          {{ value }} Days
+        {% elif key == 'jd_file_path' and jdfile_url and jdfile_url != 'Unknown' %}
+          {% if jdfile_url.lower().endswith('.pdf') %}
+            <div style="margin: 18px 0 18px 0; max-width: 700px;">
+              <embed src="{{ url_for('uploaded_file', filename='jd_files/' ~ jdfile_url.split('/')[-1]) }}" type="application/pdf" width="100%" height="520px" style="border:1.5px solid #bbb; border-radius:10px; box-shadow:0 2px 12px #0001; background:#fafbfc;" />
+            </div>
+            <div style="margin-top:8px;"><a href="{{ url_for('uploaded_file', filename='jd_files/' ~ jdfile_url.split('/')[-1]) }}" target="_blank" class="btn">Download JD PDF</a></div>
+          {% else %}
+            <a href="{{ url_for('uploaded_file', filename='jd_files/' ~ jdfile_url.split('/')[-1]) }}" target="_blank" class="btn">Download JD File</a>
+          {% endif %}
+        {% else %}
+          {{ value }}
+        {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if candidates_by_status %}
+  <div class="candidates-list" id="candidates-section">
+    <div class="section-title" style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <span>Applicants for this Job</span>
+      <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+        <input id="candidateSearch" type="text" placeholder="Search name / email / skill" style="padding:6px 10px; border:1px solid #cfd8dc; border-radius:5px; font-size:13px; min-width:220px;" value="{{ candidate_search_pref }}">
+        <select id="statusFilter" style="padding:6px 10px; border:1px solid #cfd8dc; border-radius:5px; font-size:13px;">
+          <option value="">All Statuses</option>
+          {% for s, cand in candidates_by_status.items() %}
+          <option value="{{ s }}" {% if candidate_status_pref==s %}selected{% endif %}>{{ s }} ({{ cand|length }})</option>
+          {% endfor %}
+        </select>
+        <button type="button" class="btn" onclick="toggleGroupedView()" id="toggleGroupedBtn" style="background:#1976d2; color:#fff;">{{ 'Table View' if candidate_view_pref=='grouped' else 'Grouped View' }}</button>
+      </div>
+    </div>
+
+    <!-- TABLE VIEW -->
+    <div id="candidatesTableWrapper" style="background:#fff; border:1px solid #e0e0e0; border-radius:8px; padding:12px; max-height:520px; overflow:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead style="position:sticky; top:0; background:#f5f7fa; box-shadow:0 2px 3px -1px #0002;">
+          <tr>
+            <th style="text-align:left; padding:8px 6px;">Name</th>
+            <th style="text-align:left; padding:8px 6px;">Email</th>
+            <th style="text-align:left; padding:8px 6px;">Phone</th>
+            <th style="text-align:left; padding:8px 6px;">Status</th>
+            <th style="text-align:left; padding:8px 6px;">Match</th>
+            <th style="text-align:left; padding:8px 6px;">Key Skills</th>
+            <th style="text-align:left; padding:8px 6px;">CV</th>
+          </tr>
+        </thead>
+        <tbody id="candidatesTbody">
+          {% for status, candidates in candidates_by_status.items() %}
+            {% for candidate in candidates %}
+            <tr class="cand-row" data-status="{{ status }}" data-name="{{ candidate.name|lower }}" data-email="{{ candidate.email|lower }}" data-skills="{{ (candidate.skills|join(' '))|lower }}">
+              <td style="padding:6px 6px; font-weight:600; color:#222;">{{ candidate.name }}</td>
+              <td style="padding:6px 6px;">{{ candidate.email }}</td>
+              <td style="padding:6px 6px; white-space:nowrap;">{{ candidate.phone }}</td>
+              <td style="padding:6px 6px;">
+                <span class="status-chip status-{{ status|replace(' ','-')|lower }}">{{ status }}</span>
+              </td>
+              <td style="padding:6px 6px; font-weight:600; color:#1976d2;">{% if candidate.match_score is defined %}{{ candidate.match_score }}%{% else %}-{% endif %}</td>
+              <td style="padding:6px 6px; max-width:220px;">
+                {% if candidate.skills %}
+                  {{ candidate.skills[:6]|join(', ') }}{% if candidate.skills|length > 6 %}…{% endif %}
+                {% else %}-{% endif %}
+              </td>
+              <td style="padding:6px 6px;">
+                {% if candidate.cv_path %}
+                <a href="{{ url_for('uploaded_file', filename=candidate.cv_path) }}" target="_blank" style="text-decoration:none; font-size:12px; background:#1976d2; color:#fff; padding:4px 8px; border-radius:4px;">Open</a>
+                {% else %}-{% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+      <div id="pagination" style="display:flex; gap:6px; align-items:center; justify-content:flex-end; margin-top:8px; flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- GROUPED (TREE) VIEW -->
+    <div id="groupedView" style="display:none; margin-top:16px;">
+      <div class="candidate-tree">
+        <ul class="tree-root">
+          {% for status, candidates in candidates_by_status.items() %}
+          <li class="tree-status">
+            <div class="tree-status-label" data-status-id="{{ status|replace(' ','_') }}">
+              <span class="tree-arrow" id="arrow-{{ status|replace(' ','_') }}">&#9654;</span>
+              <span class="tree-status-title">{{ status }}</span>
+              <span class="tree-status-count">{{ candidates|length }}</span>
+            </div>
+            <ul class="tree-candidates" id="tree-{{ status|replace(' ','_') }}" style="max-height:none;">
+              {% for candidate in candidates %}
+              <li class="tree-candidate" data-status="{{ candidate.status }}" data-name="{{ candidate.name|lower }}" data-email="{{ candidate.email|lower }}" data-skills="{{ (candidate.skills|join(' '))|lower }}">
+                <span class="tree-candidate-dot"></span>
+                <span><strong>{{ candidate.name }}</strong> ({{ candidate.status }}) - {{ candidate.email }}</span>
+                {% if candidate.cv_path %}
+                  <a href="{{ url_for('uploaded_file', filename=candidate.cv_path) }}" target="_blank" class="btn">View CV</a>
+                {% endif %}
+                {% if candidate.match_score is defined %}
+                  <span style="margin-left:12px; color:#1976d2; font-weight:600;">Match Score: {{ candidate.match_score }}%</span>
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <style>
+    .candidate-tree {
+      margin: 24px 0 0 0;
+      padding-left: 0;
+    }
+    .tree-root {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .tree-status {
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .tree-status-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      background: #f5faff;
+      border: 1px solid #b3d7f5;
+      border-radius: 8px;
+      padding: 10px 18px;
+      min-width: 120px;
+      font-weight: 600;
+      color: #1976d2;
+      transition: background 0.2s;
+      user-select: none;
+    }
+    .tree-status-label:hover {
+      background: #e3f2fd;
+    }
+    .tree-arrow {
+      font-size: 1.1rem;
+      margin-right: 10px;
+      transition: transform 0.3s;
+      display: inline-block;
+    }
+    .tree-status-title {
+      flex: 1;
+    }
+    .tree-status-count {
+      background: #007acc;
+      color: #fff;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-left: 10px;
+      min-width: 32px;
+      text-align: center;
+    }
+    .tree-candidates {
+      list-style: none;
+      margin: 0 0 0 32px;
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+      border-left: 2px solid #b3d7f5;
+    }
+    .tree-candidates.open { /* allow intrinsic height (no hidden candidates) */
+      max-height: 2000px;
+      transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .tree-candidate {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0 8px 0;
+      font-size: 1rem;
+      color: #222;
+      position: relative;
+    }
+    .tree-candidate-dot {
+      width: 10px;
+      height: 10px;
+      background: #1976d2;
+      border-radius: 50%;
+      margin-right: 8px;
+      display: inline-block;
+    }
+  </style>
+  <script>
+    function toggleTreeNode(status) {
+      const ul = document.getElementById('tree-' + status);
+      const arrow = document.getElementById('arrow-' + status);
+      if(!ul || !arrow) return;
+      const open = ul.classList.toggle('open');
+      arrow.style.transform = open ? 'rotate(90deg)' : '';
+    }
+    document.addEventListener('click', function(e){
+      const el = e.target.closest('.tree-status-label');
+      if(el && el.dataset.statusId){
+        toggleTreeNode(el.dataset.statusId);
+      }
+    });
+  </script>
+  <script>
+    // Status chip styling
+    (function(){
+      const style = document.createElement('style');
+      style.textContent = `.status-chip{display:inline-block;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600;background:#eef2f6;color:#37474f}
+      .status-chip.status-new{background:#e3f2fd;color:#1976d2}
+      .status-chip.status-shortlisted{background:#fff3e0;color:#f57c00}
+      .status-chip.status-selected,.status-chip.status-hired{background:#e8f5e8;color:#388e3c}
+      .status-chip.status-interviewed,.status-chip.status-interview-scheduled{background:#ede7f6;color:#6a1b9a}
+      .status-chip.status-rejected{background:#ffebee;color:#c62828}`;
+      document.head.appendChild(style);
+    })();
+
+    // Table filtering & pagination
+    const rows = Array.from(document.querySelectorAll('#candidatesTbody .cand-row'));
+    const pageSize = 15;
+    let currentPage = 1;
+    const persistedView = '{{ candidate_view_pref }}';
+    if(persistedView==='grouped'){
+      document.getElementById('groupedView').style.display='block';
+      document.getElementById('candidatesTableWrapper').style.display='none';
+      const btn = document.getElementById('toggleGroupedBtn');
+      btn.textContent='Table View';
+      btn.style.background='#455a64';
+    }
+
+    let filterAnimToken = 0;
+  const STAGGER = 36; // ms (matches CSS delays)
+  const EXIT_DUR = 220; // match CSS fade-out duration
+  const ENTER_DUR = 280; // match CSS fade-in duration
+    function orchestrateSequence(exiting, entering, done){
+      // cancel css classes first
+      exiting.forEach(el=>{ el.classList.remove('fade-in','fade-out'); });
+      entering.forEach(el=>{ el.classList.remove('fade-in','fade-out'); });
+      exiting.forEach((el,i)=>{
+        el.style.setProperty('--seq-index', i);
+        el.classList.add('fade-out');
+        el.dataset.visible='';
+        el.addEventListener('animationend', ()=>{ el.classList.remove('fade-out'); el.style.display='none'; }, {once:true});
+      });
+      const exitTotal = exiting.length ? EXIT_DUR + (exiting.length-1)*STAGGER : 0;
+      setTimeout(()=>{
+        entering.forEach((el,i)=>{
+          el.style.display='';
+          el.dataset.visible='1';
+          el.style.setProperty('--seq-index', i);
+          void el.offsetWidth;
+          el.classList.add('fade-in');
+          el.addEventListener('animationend', ()=>{ el.classList.remove('fade-in'); }, {once:true});
+        });
+        const enterTotal = entering.length ? ENTER_DUR + (entering.length-1)*STAGGER : 0;
+        setTimeout(()=> done && done(), enterTotal);
+      }, exitTotal + 6);
+    }
+    function applyFilters(){
+      const myToken = ++filterAnimToken; // for cancellation
+      const q = document.getElementById('candidateSearch').value.trim().toLowerCase();
+      const status = document.getElementById('statusFilter').value;
+      let filtered = rows.filter(r=>{
+        const matchesQ = !q || r.dataset.name.includes(q) || r.dataset.email.includes(q) || r.dataset.skills.includes(q);
+        const matchesStatus = !status || r.dataset.status === status;
+        return matchesQ && matchesStatus;
+      });
+      const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      if(currentPage>totalPages) currentPage = totalPages;
+      const start = (currentPage-1)*pageSize;
+      const pageSlice = new Set(filtered.slice(start,start+pageSize));
+      const exiting = []; const entering = [];
+      rows.forEach(r=>{
+        const shouldShow = pageSlice.has(r);
+        const visible = r.dataset.visible==='1';
+        if(visible && !shouldShow) exiting.push(r);
+        else if(!visible && shouldShow) entering.push(r);
+      });
+      renderPagination(totalPages);
+      orchestrateSequence(exiting, entering, ()=>{
+        if(myToken !== filterAnimToken) return; // canceled
+      });
+      // Grouped view
+      const treeCandidates = Array.from(document.querySelectorAll('#groupedView .tree-candidate'));
+      const gExiting=[]; const gEntering=[];
+      const anyFilterActive = !!q || !!status;
+      treeCandidates.forEach(li=>{
+        const matchesQ = !q || li.dataset.name.includes(q) || li.dataset.email.includes(q) || li.dataset.skills.includes(q);
+        const matchesStatus = !status || li.dataset.status === status;
+        const shouldShow = matchesQ && matchesStatus;
+        const visible = li.dataset.visible==='1';
+        if(visible && !shouldShow) gExiting.push(li);
+        else if(!visible && shouldShow) gEntering.push(li);
+      });
+      orchestrateSequence(gExiting, gEntering, ()=>{
+        if(myToken !== filterAnimToken) return;
+        // update counts after animations
+        const statusBlocks = Array.from(document.querySelectorAll('#groupedView .tree-status'));
+        statusBlocks.forEach(block=>{
+          const countSpan = block.querySelector('.tree-status-count');
+            const candidatesList = block.querySelectorAll('.tree-candidate');
+            let visibleCount = 0;
+            candidatesList.forEach(c=>{ if(c.dataset.visible==='1') visibleCount++; });
+            countSpan.textContent = visibleCount;
+            block.style.display = visibleCount===0 ? 'none' : '';
+            if(anyFilterActive && visibleCount>0){
+              const label = block.querySelector('.tree-status-label');
+              const statusId = label?.dataset.statusId;
+              const ul = statusId ? document.getElementById('tree-'+statusId) : null;
+              const arrow = statusId ? document.getElementById('arrow-'+statusId) : null;
+              if(ul && !ul.classList.contains('open')){ ul.classList.add('open'); if(arrow) arrow.style.transform='rotate(90deg)'; }
+            }
+        });
+      });
+    }
+    // Debounce user typing for smoother animation (avoid rapid restart)
+    let debounceTimer;
+    function scheduleFilter(){
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(applyFilters, 140);
+    }
+
+    function renderPagination(total){
+      const el = document.getElementById('pagination');
+      el.innerHTML='';
+      if(total<=1) return;
+      function btn(label, page, disabled=false, active=false){
+        const b=document.createElement('button');
+        b.textContent=label; b.style.padding='4px 8px'; b.style.border='1px solid #ccc'; b.style.background=active?'#1976d2':'#fff'; b.style.color=active?'#fff':'#222'; b.style.borderRadius='4px'; b.style.cursor=disabled?'not-allowed':'pointer'; b.disabled=disabled; b.onclick=()=>{ if(!disabled){ currentPage=page; applyFilters(); } }; el.appendChild(b);
+      }
+      btn('Prev', currentPage-1, currentPage===1);
+      for(let p=1;p<=total;p++){ if(p<=3 || p>total-3 || Math.abs(p-currentPage)<=1){ btn(p,p,false,p===currentPage); } else if(p===4 && currentPage>5){ const span=document.createElement('span'); span.textContent='…'; span.style.margin='0 4px'; el.appendChild(span); } else if(p===total-3 && currentPage<total-4){ const span=document.createElement('span'); span.textContent='…'; span.style.margin='0 4px'; el.appendChild(span); } }
+      btn('Next', currentPage+1, currentPage===total);
+    }
+
+    function persistPref(payload){
+      fetch("{{ url_for('set_candidate_pref') }}", {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}).catch(()=>{});
+    }
+  document.getElementById('candidateSearch').addEventListener('input', ()=>{currentPage=1; scheduleFilter(); persistPref({search: document.getElementById('candidateSearch').value});});
+  document.getElementById('statusFilter').addEventListener('change', ()=>{currentPage=1; scheduleFilter(); persistPref({status: document.getElementById('statusFilter').value});});
+  applyFilters();
+
+    // Toggle grouped vs table
+    function toggleGroupedView(){
+      const grouped = document.getElementById('groupedView');
+      const table = document.getElementById('candidatesTableWrapper');
+      const btn = document.getElementById('toggleGroupedBtn');
+      if(grouped.style.display==='none'){ grouped.style.display='block'; table.style.display='none'; btn.textContent='Table View'; btn.style.background='#455a64'; persistPref({view:'grouped'}); }
+      else { grouped.style.display='none'; table.style.display='block'; btn.textContent='Grouped View'; btn.style.background='#1976d2'; persistPref({view:'table'}); }
+      applyFilters();
+    }
+    window.toggleGroupedView = toggleGroupedView; // expose
+  </script>
+  {% endif %}
+</div>
+
+<!-- Status Information Popup -->
+<div id="statusPopup" class="status-popup">
+  <div class="popup-header">Job Status Information</div>
+  {% if job_status_info %}
+    <div class="popup-item">
+      <span class="popup-label">Current Status:</span>
+      <span class="popup-value">
+        <span class="status-indicator 
+          {% if job_status_info.is_expired %}status-expired
+          {% elif job.get('status', '').lower() == 'closed' %}status-closed
+          {% else %}status-open
+          {% endif %}">
+          {{ job.get('status', 'Unknown') }}
+        </span>
+      </span>
+    </div>
+    
+    {% if job_status_info.days_remaining >= 0 %}
+      <div class="popup-item">
+        <span class="popup-label">Days Remaining:</span>
+        <span class="popup-value">{{ job_status_info.days_remaining }} days</span>
+      </div>
+    {% else %}
+      <div class="popup-item">
+        <span class="popup-label">Status:</span>
+        <span class="popup-value">Expired {{ job_status_info.days_remaining|abs }} days ago</span>
+      </div>
+    {% endif %}
+    
+    <div class="popup-item">
+      <span class="popup-label">Closing Date:</span>
+      <span class="popup-value">{{ job_status_info.closing_date }}</span>
+    </div>
+    
+    <div class="popup-item">
+      <span class="popup-label">Posted Date:</span>
+      <span class="popup-value">{{ job_status_info.posted_date }}</span>
+    </div>
+    
+    <div class="popup-item">
+      <span class="popup-label">Lead Time:</span>
+      <span class="popup-value">{{ job_status_info.lead_time_days }} days</span>
+    </div>
+    
+    <div class="popup-item">
+      <span class="popup-label">Total Openings:</span>
+      <span class="popup-value">{{ job_status_info.total_openings }}</span>
+    </div>
+    
+    <div class="popup-item">
+      <span class="popup-label">Hired Candidates:</span>
+      <span class="popup-value">{{ job_status_info.hired_count }}</span>
+    </div>
+    
+    <div class="popup-item">
+      <span class="popup-label">Vacancies Remaining:</span>
+      <span class="popup-value">{{ job_status_info.vacancies_remaining }}</span>
+    </div>
+    
+    {% if job_status_info.is_filled %}
+      <div style="margin-top: 8px; padding: 6px; background: #d4edda; color: #155724; border-radius: 4px; font-size: 12px;">
+        ✓ All positions filled
+      </div>
+    {% elif job_status_info.is_expired %}
+      <div style="margin-top: 8px; padding: 6px; background: #fff3cd; color: #856404; border-radius: 4px; font-size: 12px;">
+        ⚠ Lead time expired
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+
+{% endblock %}

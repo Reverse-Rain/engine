@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+{% block title %}Candidate Profile{% endblock %}
+{% block content %}
+<style>
+  .wrap{max-width:960px;margin:32px auto;padding:32px 36px;background:#fff;border-radius:14px;box-shadow:0 4px 16px -2px rgba(0,0,0,.08);font-size:14px}
+  h1{margin:0 0 4px;font-size:26px;letter-spacing:-.5px;color:#0d47a1}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px}
+  .badge{padding:4px 10px;border-radius:18px;font-size:11px;font-weight:600;letter-spacing:.4px;display:inline-flex;align-items:center;line-height:1}
+  .b-new{background:#e3f2fd;color:#1565c0}.b-shortlisted{background:#fff3e0;color:#ef6c00}.b-interview{background:#ede7f6;color:#6a1b9a}.b-approved{background:#e8f5e9;color:#2e7d32}.b-selected{background:#e3f2fd;color:#004d99}.b-hired{background:#d1ecf1;color:#0c5460}.b-rejected{background:#f8d7da;color:#721c24}.b-onboarding{background:#e0f7fa;color:#006064}.b-hold{background:#fff8e1;color:#6c5ce7}
+  .grid{display:grid;gap:20px;margin-top:22px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .card{background:#f8fafc;border:1px solid #e2e8f0;padding:16px 18px 18px;border-radius:12px;display:flex;flex-direction:column;gap:10px}
+  .card h3{margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;color:#2667c9}
+  .meta{display:grid;grid-template-columns:110px 1fr;row-gap:4px;column-gap:10px;font-size:13px}
+  .meta div:first-child{color:#607287;font-weight:500}
+  .pill{background:#eef3f8;padding:3px 10px;border-radius:18px;font-size:11px;font-weight:500;margin:0 4px 6px 0;display:inline-block}
+  .history{max-height:200px;overflow:auto;padding-right:4px}
+  .hist{background:#fff;border:1px solid #e3edf2;border-left:3px solid #1976d2;border-radius:8px;padding:8px 10px 10px;margin:0 0 8px}
+  .hist small{display:block;color:#607287;font-size:11px;margin-top:2px}
+  .empty{color:#607287;font-style:italic;font-size:12px}
+  .actions form{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin:0}
+  .divider{height:1px;background:linear-gradient(90deg,rgba(0,0,0,0)0,#dbe4ec 15%,#dbe4ec 85%,rgba(0,0,0,0)100%);margin:28px 0}
+  @media (max-width:720px){.wrap{padding:26px 20px;margin:20px 12px}}
+  /* Timeline component */
+  .timeline-block{margin-top:28px}
+  .tl-card{background:#f8fafc;border:1px solid #e2e8f0;padding:26px 32px;border-radius:14px;overflow:hidden}
+  .tl-rail{position:relative;display:flex;justify-content:space-between;align-items:flex-start;margin:0 0 8px}
+  .tl-rail:before{content:"";position:absolute;top:40px;left:0;right:0;height:6px;background:#e2e8f0;border-radius:3px}
+  .tl-stage{position:relative;flex:1;text-align:center;font-size:13px}
+  .tl-stage:not(:last-child){margin-right:4px}
+  .tl-node{width:72px;height:72px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:600;color:#fff;box-shadow:0 4px 10px -2px rgba(0,0,0,.18)}
+  .tl-label{font-weight:600;letter-spacing:.3px;color:#0f5132;margin:0 0 2px}
+  .tl-label-completed{color:#04884a}
+  .tl-label-current{color:#d58500}
+  .tl-label-pending{color:#4a5568}
+  .tl-desc{color:#607287;font-size:12px;margin:0 0 6px}
+  .tl-date{display:inline-block;background:#e6f9ef;color:#1e7e34;font-size:11px;padding:4px 10px;border-radius:14px;font-weight:600;letter-spacing:.3px}
+  /* State colors */
+  .tl-stage.completed .tl-node{background:#02a65a}
+  .tl-stage.current .tl-node{background:#f2a500}
+  .tl-stage.pending .tl-node{background:#d4d9df;color:#4a5568;font-size:26px}
+  .tl-stage.completed .tl-node:after,.tl-stage.current .tl-node:after{content:"";position:absolute;top:40px;left:0;right:0;height:6px;background:#02a65a;z-index:0}
+  .tl-stage.current .tl-node:after{background:linear-gradient(90deg,#02a65a 0%,#02a65a 55%,#d4d9df 55%)}
+  /* place inner progress bar */
+  .tl-stage{padding:0 4px}
+  .tl-stage .inner-line{display:none}
+  .tl-node span{font-size:26px}
+  .tl-toggle{cursor:pointer;display:inline-block;margin-left:4px;font-size:12px;color:#0d47a1;text-decoration:none}
+  .tl-details{display:none;margin-top:6px;text-align:left;font-size:12px;background:#fff;border:1px solid #dbe4ec;padding:8px 10px;border-radius:8px;max-height:160px;overflow:auto}
+  .tl-details table{width:100%;border-collapse:collapse;font-size:11px}
+  .tl-details th,.tl-details td{padding:4px 6px;border-bottom:1px solid #eef3f8;text-align:left}
+  .tl-details th{background:#f1f5f9;font-weight:600;color:#38536a;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+  .tl-stage.open .tl-details{display:block}
+  @media(max-width:960px){.tl-node{width:56px;height:56px;font-size:24px}.tl-label{font-size:12px}.tl-desc{display:none}.tl-rail:before{top:32px}.tl-stage.completed .tl-node:after,.tl-stage.current .tl-node:after{top:32px}}
+</style>
+
+{% if not_found %}
+  <div class="wrap">
+    <h2 style="color:#d32f2f;margin:0 0 6px;">Candidate Not Found</h2>
+    <p style="margin:0 0 18px;">No candidate with ID {{ candidate_id }} exists.</p>
+    <a href="/" class="btn btn-primary btn-sm">Back</a>
+  </div>
+{% else %}
+<div class="wrap">
+  <h1>{{ candidate.name }}</h1>
+    {% if timeline_stages %}
+    <div class="timeline-block">
+      <h2 style="font-size:18px;font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:8px;color:#14487e"><span style="font-size:18px">📊</span> Application Progress Timeline</h2>
+      <div class="tl-card">
+        <div class="tl-rail">
+          {% for st in timeline_stages %}
+            <div class="tl-stage {{ st.state }}">
+              <div class="tl-node">{% if st.state=='completed' %}<span>✓</span>{% elif st.state=='current' %}<span style="font-size:30px">📄</span>{% else %}<span>○</span>{% endif %}</div>
+              <div class="tl-label tl-label-{{ st.state }}">{{ st.label }}</div>
+              <div class="tl-desc">{{ st.desc }}</div>
+              <div>
+                {% if st.date %}<span class="tl-date">{{ st.date }}</span>{% else %}
+                  {% if st.state=='current' %}<span class="tl-date" style="background:#fff3cd;color:#856404">In Progress</span>{% elif st.state=='completed' %}<span class="tl-date" style="background:#e6f9ef;color:#1e7e34">Date not set</span>{% else %}<span class="tl-date" style="background:#eef3f8;color:#607287">Pending</span>{% endif %}
+                {% endif %}
+                {% if st.events and st.events|length > 0 %}
+                  <a class="tl-toggle" onclick="toggleTlDetails(this)" href="javascript:void(0)">▼</a>
+                {% endif %}
+              </div>
+              {% if st.events and st.events|length > 0 %}
+                <div class="tl-details">
+                  <table>
+                    <thead><tr><th>Status</th><th>From</th><th>By</th><th>Role</th><th>When</th><th>Type</th></tr></thead>
+                    <tbody>
+                    {% for ev in st.events %}
+                      <tr>
+                        <td>{{ ev.to_status }}</td>
+                        <td>{{ ev.from_status }}</td>
+                        <td>{{ ev.updated_by }}</td>
+                        <td>{{ ev.updated_by_role }}</td>
+                        <td>{{ ev.updated_at }}</td>
+                        <td>{{ ev.update_type }}</td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              {% endif %}
+                <script>
+                  function toggleTlDetails(el){
+                    var st = el.closest('.tl-stage');
+                    if(st.classList.contains('open')){st.classList.remove('open');el.textContent='▼';}
+                    else {st.classList.add('open');el.textContent='▲';}
+                  }
+                </script>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  <div class="badges">
+    {% set s = (candidate.status or '').lower() %}
+    <span class="badge b-{{ 'interview' if 'interview' in s else ('onboarding' if 'onboard' in s else s.replace(' ','-')) }}">{{ candidate.status }}</span>
+    <span style="color:#607287;font-size:12px;">Applied {{ candidate.applied_date or '-' }}</span>
+    {% if candidate.match_score %}<span class="badge" style="background:#e8f5e9;color:#2e7d32;">Match {{ candidate.match_score }}%</span>{% endif %}
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Profile</h3>
+      <div class="meta">
+        <div>Position</div><div>{{ candidate.job_title or candidate.position or '-' }}</div>
+        <div>Department</div><div>{{ candidate.department or '-' }}</div>
+        <div>Status</div><div>{{ candidate.status }}</div>
+        <div>Email</div><div>{{ candidate.email }}</div>
+        <div>Phone</div><div>{{ candidate.phone }}</div>
+        <div>Applied</div><div>{{ candidate.applied_date or '-' }}</div>
+        <div>Match</div><div>{{ candidate.match_score or '-' }}</div>
+      </div>
+      {% if candidate.cv_path %}<a class="btn btn-sm btn-outline-primary" href="/{{ candidate.cv_path }}" target="_blank" style="margin-top:8px;font-size:12px;">View CV</a>{% endif %}
+    </div>
+
+    <div class="card">
+      <h3>Skills</h3>
+      {% if candidate.skills %}{% for s in candidate.skills %}<span class="pill">{{ s }}</span>{% endfor %}{% else %}<div class="empty">No skills.</div>{% endif %}
+      <h3 style="margin-top:10px;">Experience</h3>
+      {% if candidate.experience %}
+        <ul style="margin:4px 0 0 16px;padding:0;">{% for e in candidate.experience %}<li style="margin-bottom:4px;line-height:1.3;">{{ e }}</li>{% endfor %}</ul>
+      {% else %}<div class="empty">No experience.</div>{% endif %}
+    </div>
+
+    <div class="card">
+      <h3>Status History</h3>
+      <div class="history">
+        {% if history %}
+          {% for h in history %}
+            <div class="hist"><strong style="font-size:13px;">{{ h.status }}</strong><small>{{ h.updated_at or '' }}</small>{% if h.note %}<div style="font-size:11px;color:#40566d;margin-top:4px;white-space:pre-wrap;">{{ h.note }}</div>{% endif %}</div>
+          {% endfor %}
+        {% else %}<div class="empty">No changes.</div>{% endif %}
+      </div>
+    </div>
+
+    <div style="width:100%;max-width:none;">
+      <h3 style="margin-left:8px;">Interview</h3>
+      {% if candidate.interview_analysis and candidate.interview_analysis|length > 0 %}
+        <div style="display: flex; flex-direction: row; gap: 18px; overflow-x: auto; padding-bottom: 8px; width:100vw; max-width:calc(100vw - 80px); margin-left:-32px; padding-left:32px;">
+          {% for round in candidate.interview_analysis %}
+            <div style="flex: 0 0 320px; min-width: 260px; max-width: 340px; background: #f8fafc; border-radius: 12px; padding: 18px 16px 16px 16px; box-shadow: 0 2px 8px #e6eaf1; position: relative; margin-bottom: 10px; display: flex; flex-direction: column; align-items: flex-start;">
+              <div style="display: flex; align-items: center; gap: 16px; width: 100%;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: #fff; border: 4px solid #007bff; display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: 700; color: #007bff; box-shadow: 0 2px 8px #e6eaf1;">
+                  {% if round.performance_score is not none %}{{ round.performance_score }}{% else %}<span style="font-size:0.7em;">N/A</span>{% endif %}
+                </div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-weight:600;font-size:1.1em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ round.round_name if round.round_name else ("Round " ~ loop.index) }}</div>
+                  {% if round.transcript %}<div style="font-size:11px;color:#888;margin-top:2px;">Transcript available</div>{% endif %}
+                </div>
+              </div>
+              {% if round.feedback %}
+                <div style="margin-top:12px;font-size:13px;line-height:1.6;width:100%;">
+                  <details style="margin-top:4px;">
+                    <summary style="cursor:pointer; font-size:13px; color:#007bff;">Show Feedback</summary>
+                    <div class="feedback-markdown" id="feedback-md-{{ loop.index0 }}"></div>
+                  </details>
+                </div>
+                <button type="button" class="btn btn-link btn-sm view-feedback-btn" style="padding:0;margin-top:6px;font-size:12px;" data-index="{{ loop.index0 }}">View Full Feedback</button>
+              {% elif round.processing %}
+                <div style="margin-top:12px;font-size:13px;color:#888;">Processing...</div>
+              {% else %}
+                <div style="margin-top:12px;font-size:13px;color:#888;">No feedback available.</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        <div id="feedback-modal-bg" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;align-items:center;justify-content:center;">
+          <div id="feedback-modal" style="background:#fff;padding:32px 24px 24px 24px;border-radius:12px;max-width:600px;max-height:80vh;overflow:auto;box-shadow:0 4px 24px #0002;position:relative;">
+            <button onclick="closeFeedbackModal()" style="position:absolute;top:8px;right:12px;font-size:18px;background:none;border:none;cursor:pointer;">&times;</button>
+            <div id="feedback-modal-content" style="font-size:15px;line-height:1.7;"></div>
+          </div>
+        </div>
+      {% elif candidate.ai_interview_report %}
+        <div style="max-height:160px;overflow:auto;font-size:12px;line-height:1.45;">{{ candidate.ai_interview_report | replace('*','') | replace('#','') | replace('\\n','<br>') | safe }}</div>
+      {% else %}
+        <div class="empty">No interview data.</div>
+      {% endif %}
+    </div>
+  </div>
+
+
+  {# --- INTERVIEW VIDEO UPLOAD SECTION (only if Interview Scheduled) --- #}
+  {% if candidate.status and candidate.status.lower() == 'interview scheduled' %}
+  <div class="card" style="margin-bottom:24px;">
+    <h3>Upload Interview Videos (Multiple Rounds)</h3>
+    <form action="{{ url_for('upload_interview_videos', candidate_id=candidate.id) }}" method="post" enctype="multipart/form-data">
+      <div id="interview-rounds-container">
+        <div class="interview-round-upload mb-2">
+          <label>Interview Round 1 Video:</label>
+          <input type="file" name="interview_videos" accept="video/*" required class="form-control" />
+          <input type="text" name="round_names" placeholder="Round Name (e.g. Technical, HR, etc.)" class="form-control" style="margin-top:4px;" required />
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="addInterviewRound()" style="margin-right:8px;">Add Another Round</button>
+      <button type="submit" class="btn btn-primary btn-sm">Upload & Analyze</button>
+    </form>
+    <script>
+      let roundCount = 1;
+      function addInterviewRound() {
+        roundCount++;
+        const container = document.getElementById('interview-rounds-container');
+        const div = document.createElement('div');
+        div.className = 'interview-round-upload mb-2';
+        div.innerHTML = `<label>Interview Round ${roundCount} Video:</label><input type="file" name="interview_videos" accept="video/*" required class="form-control" /><input type="text" name="round_names" placeholder="Round Name (e.g. Technical, HR, etc.)" class="form-control" style="margin-top:4px;" required /><button type='button' class='btn btn-danger btn-sm' style='margin-top:4px;' onclick='this.parentNode.remove()'>Remove</button>`;
+        container.appendChild(div);
+      }
+    </script>
+    <p class="text-muted mt-2" style="font-size: 13px;">Upload one video per round. You can add more rounds as needed. Please provide a name for each round.</p>
+  </div>
+  {% endif %}
+
+  {# --- INTERVIEW ANALYSIS RESULTS SECTION --- #}
+
+  {% if candidate.interview_analysis and candidate.interview_analysis|length > 0 %}
+  <div class="card" style="margin-bottom:24px;">
+    <h3>Interview Performance Analysis</h3>
+    {% for round in candidate.interview_analysis %}
+      <div class="mb-2 p-2" style="border:1px solid #e0e0e0; border-radius:8px; background:#fafbfc; position:relative;">
+  <strong>{{ round.round_name if round.round_name else ("Round " ~ loop.index) }}</strong>
+        {% if round.video_filename %}
+          <div style="margin:8px 0; position:relative; width:100%; max-width:400px;">
+            <video width="100%" height="220" controls style="border-radius:8px; background:#000;">
+              <source src="{{ url_for('uploaded_file', filename=round.video_filename) }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            {% if round.processing %}
+              <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border-radius:8px;z-index:2;">
+                <span>Processing...</span>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if not round.processing %}
+          {% if round.transcript %}
+            <details>
+              <summary style="cursor:pointer;">Show Transcript</summary>
+              <pre style="font-size:12px; background:#f4f4f4; padding:8px; border-radius:4px; white-space:pre-wrap; word-break:break-word; max-width:100%; overflow-x:auto;">{{ round.transcript }}</pre>
+            </details>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="divider"></div>
+
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+    <div class="card">
+      <h3>Documents</h3>
+      {% if candidate.cv_path %}<div style="margin-bottom:8px;">Resume: <a href="/{{ candidate.cv_path }}" target="_blank">Open</a></div>{% endif %}
+      {% if candidate.interview_video %}<div>Interview Video: <a href="/{{ candidate.interview_video }}" target="_blank">Open</a></div>{% endif %}
+      {% if not candidate.cv_path and not candidate.interview_video %}<div class="empty">No documents.</div>{% endif %}
+    </div>
+    <div class="card actions">
+      <h3>Actions</h3>
+      <form action="/update_candidate_status" method="post">
+        <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+        <label style="font-size:12px;display:flex;flex-direction:column;gap:4px;">New Status
+          <select name="new_status" required style="padding:6px 8px;border:1px solid #b5c4d3;border-radius:6px;font-size:12px;min-width:160px;">
+            {% for opt in ['New','Shortlisted','Interview Scheduled','Interviewed','Pending Approval','Approved','Selected','Hired','Rejected','On Hold','Onboarding'] %}
+              <option value="{{ opt }}" {% if candidate.status==opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <button type="submit" class="btn btn-primary btn-sm" style="font-size:12px;">Update</button>
+      </form>
+  {% set s = (candidate.status or '').lower() %}
+  {% if s == 'hired' or s == 'onboarding' %}
+        <div class="divider"></div>
+        <div class="card" style="margin-top:12px;">
+          <h3>Onboarding Steps</h3>
+          <form action="/update_onboarding_steps" method="post" id="onboardingForm">
+            <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+            {% set steps = [
+              'Joining Formalities',
+              'HR Introduction',
+              'Document Verification',
+              'User Ids and ICT Allocation'
+            ] %}
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              {% for step in steps %}
+                <label style="display:flex;align-items:center;gap:10px;font-size:14px;">
+                  <input type="checkbox" name="onboarding_steps" value="{{ step }}" {% if candidate.onboarding and candidate.onboarding.get(step) == 'Completed' %}checked{% endif %}>
+                  <span>{{ step }}</span>
+                  {% if candidate.onboarding and candidate.onboarding.get(step) == 'Completed' %}
+                    <span style="color:#43a047;font-size:12px;">Completed</span>
+                  {% elif candidate.onboarding and candidate.onboarding.get(step) == 'In Progress' %}
+                    <span style="color:#f2a500;font-size:12px;">In Progress</span>
+                  {% else %}
+                    <span style="color:#888;font-size:12px;">Pending</span>
+                  {% endif %}
+                </label>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" style="margin-top:14px;font-size:13px;">Update Onboarding Progress</button>
+          </form>
+          <script>
+            // Animate checkboxes on change
+            document.querySelectorAll('#onboardingForm input[type="checkbox"]').forEach(cb => {
+              cb.addEventListener('change', function() {
+                this.parentElement.style.transition = 'background 0.3s';
+                this.parentElement.style.background = this.checked ? '#e8f5e9' : '#fff';
+                setTimeout(()=>{this.parentElement.style.background='#fff';}, 600);
+              });
+            });
+          </script>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

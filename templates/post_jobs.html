@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+body {
+  background: #ffffff !important;
+}
+.job-form-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 32px 24px 24px 24px;
+  font-family: 'Segoe UI', sans-serif;
+}
+.job-form-container h2 {
+  margin-bottom: 8px;
+  font-size: 2rem;
+  color: #333333;
+  font-weight: 600;
+}
+.job-form-container .subtitle {
+  margin-bottom: 28px;
+  font-size: 1rem;
+  color: #666666;
+}
+.job-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 32px;
+  align-items: start;
+}
+.form-group {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.form-group input,
+.form-group select {
+  box-sizing: border-box;
+  min-width: 0;
+  margin: 0;
+}
+.form-group {
+  margin-bottom: 0;
+}
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333333;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #e5e7eb;
+  box-shadow: 0 0 0 2px #f3f4f6;
+}
+.btn-primary {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 24px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+  grid-column: 1 / -1;
+}
+.btn-primary:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+@media (max-width: 900px) {
+  .job-form-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .job-form-container {
+    padding: 18px 4vw;
+  }
+}
+</style>
+
+<div class="job-form-container">
+    <h2>Create Job Opening</h2>
+    <p class="subtitle">Add details about the new position and upload the job description file.</p>
+    <form method="post" action="/post_jobs" enctype="multipart/form-data">
+      <input type="hidden" name="jd_option" value="upload">
+      <div class="job-form-grid">
+        <div class="form-group">
+          <label for="job_title">Job Title</label>
+          <input type="text" id="job_title" name="job_title" required placeholder="e.g. Software Engineer" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="jd_file">Job Description (Upload JD)</label>
+          <input type="file" id="jd_file" name="jd_file" accept=".txt,.pdf,.doc,.docx" required>
+        </div>
+        <div class="form-group">
+          <label for="department">Department</label>
+          <input type="text" id="department" name="department" required placeholder="e.g. Engineering" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="seniority_level">Seniority Level</label>
+          <select id="seniority_level" name="seniority_level" required>
+            <option value="">Select...</option>
+            <option value="Intern">Intern</option>
+            <option value="Junior">Junior</option>
+            <option value="Mid">Mid</option>
+            <option value="Senior">Senior</option>
+            <option value="Lead">Lead</option>
+            <option value="Manager">Manager</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="job_openings">Number of Openings</label>
+          <input type="number" id="job_openings" name="job_openings" min="1" required>
+        </div>
+        <div class="form-group">
+          <label for="job_location">Location</label>
+          <input type="text" id="job_location" name="job_location" required placeholder="e.g. Remote / Dubai" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="salary_range">Salary Range</label>
+          <input type="text" id="salary_range" name="salary_range" required placeholder="e.g. AED 10,000 - AED 15,000" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="job_type">Employment Type</label>
+          <select id="job_type" name="job_type" required>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Contract">Contract</option>
+            <option value="Internship">Internship</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="job_requirements">Required Skills (comma separated)</label>
+          <input type="text" id="job_requirements" name="job_requirements" required placeholder="e.g. Python, Django, REST" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="lead_time">Lead Time (days)</label>
+          <input type="number" id="lead_time" name="lead_time" min="0" required placeholder="e.g. 30">
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1; margin-top: 10px;">
+          <label style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="auto_shortlisting" name="auto_shortlisting" value="1" {% if session.get('auto_shortlisting', True) %}checked{% endif %} onchange="toggleMatchScore()">
+            Enable Auto Shortlisting
+          </label>
+        </div>
+        <div class="form-group" id="match_score_group" style="grid-column: 1 / -1; display: {% if session.get('auto_shortlisting', True) %}block{% else %}none{% endif %};">
+          <label for="match_score">Match Score Threshold (%)</label>
+          <input type="number" id="match_score" name="match_score" min="0" max="100" value="{{ session.get('match_score', 75) }}" step="1">
+          <small style="color:#666;">Candidates with a match score above this value will be shortlisted automatically.</small>
+        </div>
+        <button type="submit" class="btn-primary">Create Job Opening</button>
+      </div>
+    </form>
+</div>
+<script>
+function toggleMatchScore() {
+  var cb = document.getElementById('auto_shortlisting');
+  var group = document.getElementById('match_score_group');
+  if (cb.checked) {
+    group.style.display = 'block';
+  } else {
+    group.style.display = 'none';
+  }
+}
+window.onload = function() { toggleMatchScore(); };
+</script>
+{% endblock %}

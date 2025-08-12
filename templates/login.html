@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="auth-layout">
+        <div class="auth-container">
+            <div class="logo" style="display: flex; align-items: center; gap: 10px; color: #1f2937;">
+                <img src="{{ url_for('static', filename='images/rj.png') }}" alt="Logo" style="height: 30px; width: auto;">
+            </div>
+
+            <br>
+
+            <h2>Centrifuge Hire</h2>
+            <p class="subtitle">Sign in to your account to continue exploring and utilizing all the resources.</p>
+            
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="btn-primary">Sign in</button>
+            </form>
+            
+            <div class="auth-link">
+                Don't have an account? <a href="/signup">Sign up</a>
+            </div>
+            
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="auth-image">
+            <div class="image-content">
+                <div class="tips-container">
+                    <div class="tips-card">
+                        <div class="tips-header">
+                            <strong style="font-size: 0.9rem; color: #4f46e5;">💡 HR AI Tip</strong>
+                            <div class="tips-tags"></div>
+                        </div>
+                        <div class="tips-text" style="margin-top: 10px;">
+                            <!-- Tip content will go here -->
+                        </div>
+
+                        <div class="navigation-arrows" style="margin-top: 1rem;">
+                            <button class="arrow-btn" onclick="previousTip()">
+                                <span>←</span>
+                            </button>
+                            <button class="arrow-btn" onclick="nextTip()">
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Rotating HR AI tips
+        const tips = [
+            {
+                text: "Automate resume screening and shortlist candidates in seconds using AI.",
+                tags: ["AI screening", "Faster hiring"]
+            },
+            {
+                text: "Easily schedule interviews and send calendar invites directly from the platform.",
+                tags: ["Interview automation", "Calendar integration"]
+            },
+            {
+                text: "Track applicant progress in real-time and generate performance reports instantly.",
+                tags: ["ATS", "Real-time tracking"]
+            },
+            {
+                text: "Use chat-based commands to fetch employee data, update roles, or export reports.",
+                tags: ["Chat commands", "Instant actions"]
+            },
+            {
+                text: "Set up automated onboarding workflows for new hires — from welcome email to policy signing.",
+                tags: ["Workflow automation", "New hires"]
+            }
+        ];
+
+        let currentTip = 0;
+
+        function updateTip() {
+            const tip = tips[currentTip];
+            const tipText = document.querySelector('.tips-text');
+            const tipTags = document.querySelector('.tips-tags');
+
+            tipText.textContent = tip.text;
+
+            tipTags.innerHTML = '';
+            tip.tags.forEach(tag => {
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'tag';
+                tagSpan.textContent = tag;
+                tipTags.appendChild(tagSpan);
+            });
+        }
+
+        function nextTip() {
+            currentTip = (currentTip + 1) % tips.length;
+            updateTip();
+        }
+
+        function previousTip() {
+            currentTip = (currentTip - 1 + tips.length) % tips.length;
+            updateTip();
+        }
+
+        // Initialize with first tip
+        window.onload = updateTip;
+    </script>
+</body>
+</html>

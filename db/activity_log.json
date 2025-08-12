@@ -1,0 +1,2138 @@
+[
+  {
+    "id": "act_20250808_144442_036478",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Kevin Flores (ID: 1) applied",
+    "user": "johnsonkathy@lawson.com",
+    "entity_id": 1,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-07"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_046879",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Scott Johnson (ID: 2) applied",
+    "user": "fwall@gmail.com",
+    "entity_id": 2,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-08-07"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_142050",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Matthew Collins (ID: 3) applied",
+    "user": "stephenfuller@gmail.com",
+    "entity_id": 3,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-07"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_157546",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Kayla Garcia (ID: 4) applied",
+    "user": "grahamadam@gmail.com",
+    "entity_id": 4,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-07"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_173069",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Isabelle Garcia (ID: 5) applied",
+    "user": "isabelle69@yahoo.com",
+    "entity_id": 5,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-24"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_188124",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Robert Yamamoto (ID: 6) applied",
+    "user": "robertyamamoto@outlook.com",
+    "entity_id": 6,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-06"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_208214",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate James Durand (ID: 7) applied",
+    "user": "durandjames@hotmail.com",
+    "entity_id": 7,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-14"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_223466",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Wang Yoshida (ID: 8) applied",
+    "user": "yoshidawang@hotmail.com",
+    "entity_id": 8,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-27"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_238754",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Huda Garcia (ID: 9) applied",
+    "user": "garciahuda@hotmail.com",
+    "entity_id": 9,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-30"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_252897",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Zhao Brown (ID: 10) applied",
+    "user": "zhaobrown@outlook.com",
+    "entity_id": 10,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-01"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_276724",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Naoko Kato (ID: 11) applied",
+    "user": "naoko75@yahoo.com",
+    "entity_id": 11,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-03"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_293756",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Anita Petit (ID: 12) applied",
+    "user": "anita48@yahoo.com",
+    "entity_id": 12,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-07"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_309517",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Isabelle Al-Zahra (ID: 13) applied",
+    "user": "isabelle46@yahoo.com",
+    "entity_id": 13,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-23"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_323266",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Antoine Sharma (ID: 14) applied",
+    "user": "antoine83@yahoo.com",
+    "entity_id": 14,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-18"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_336170",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Christopher Al-Ahmad (ID: 15) applied",
+    "user": "al-ahmadchristopher@hotmail.com",
+    "entity_id": 15,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-20"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_348653",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sarah Li (ID: 16) applied",
+    "user": "sarahli@outlook.com",
+    "entity_id": 16,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-07"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_361030",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Anna Verma (ID: 17) applied",
+    "user": "annaverma@outlook.com",
+    "entity_id": 17,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-26"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_371914",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Lina Agarwal (ID: 18) applied",
+    "user": "lina.agarwal@gmail.com",
+    "entity_id": 18,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-17"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_384147",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Satoshi Yoshida (ID: 19) applied",
+    "user": "satoshiyoshida@outlook.com",
+    "entity_id": 19,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-15"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_397589",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Kavya Rodriguez (ID: 20) applied",
+    "user": "kavya.rodriguez@gmail.com",
+    "entity_id": 20,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-06"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_409142",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Amina Martin (ID: 21) applied",
+    "user": "martinamina@hotmail.com",
+    "entity_id": 21,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-26"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_423409",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Liu Al-Zahra (ID: 22) applied",
+    "user": "liu50@yahoo.com",
+    "entity_id": 22,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-12"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_437054",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Nour Thomas (ID: 23) applied",
+    "user": "nour.thomas@gmail.com",
+    "entity_id": 23,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-13"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_449802",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Salma Suzuki (ID: 24) applied",
+    "user": "suzukisalma@hotmail.com",
+    "entity_id": 24,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-20"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_461551",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Abdul Sharma (ID: 25) applied",
+    "user": "sharmaabdul@hotmail.com",
+    "entity_id": 25,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-03"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_475802",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sarah Kobayashi (ID: 26) applied",
+    "user": "sarah88@yahoo.com",
+    "entity_id": 26,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-09"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_489176",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Vikash Tanaka (ID: 27) applied",
+    "user": "vikash.tanaka@gmail.com",
+    "entity_id": 27,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-16"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_502369",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Anna Zhao (ID: 28) applied",
+    "user": "anna.zhao@gmail.com",
+    "entity_id": 28,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-08-02"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_516349",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Wang Davis (ID: 29) applied",
+    "user": "wang.davis@gmail.com",
+    "entity_id": 29,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-21"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_530295",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Lina Al-Mahmoud (ID: 30) applied",
+    "user": "linaal-mahmoud@outlook.com",
+    "entity_id": 30,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-27"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_545006",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Priya Rodriguez (ID: 31) applied",
+    "user": "priya.rodriguez@gmail.com",
+    "entity_id": 31,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-31"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_559485",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Anita Watanabe (ID: 32) applied",
+    "user": "anita41@yahoo.com",
+    "entity_id": 32,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-21"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_574209",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Huda Dubois (ID: 33) applied",
+    "user": "hudadubois@outlook.com",
+    "entity_id": 33,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-23"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_588491",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Nicolas Brown (ID: 34) applied",
+    "user": "brownnicolas@hotmail.com",
+    "entity_id": 34,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-04"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_603311",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Layla Agarwal (ID: 35) applied",
+    "user": "agarwallayla@hotmail.com",
+    "entity_id": 35,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-22"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_617561",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Takeshi Miller (ID: 36) applied",
+    "user": "takeshi.miller@gmail.com",
+    "entity_id": 36,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-02"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_629508",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Emma Williams (ID: 37) applied",
+    "user": "williamsemma@hotmail.com",
+    "entity_id": 37,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-26"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_642981",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Camille Wang (ID: 38) applied",
+    "user": "camille.wang@gmail.com",
+    "entity_id": 38,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-18"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_655715",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Olivia Gupta (ID: 39) applied",
+    "user": "guptaolivia@hotmail.com",
+    "entity_id": 39,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-08"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_670542",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Karim Yoshida (ID: 40) applied",
+    "user": "karimyoshida@outlook.com",
+    "entity_id": 40,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-04"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_686925",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate David Leroy (ID: 41) applied",
+    "user": "davidleroy@outlook.com",
+    "entity_id": 41,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-12"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_700064",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Kavya Verma (ID: 42) applied",
+    "user": "kavya23@yahoo.com",
+    "entity_id": 42,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-04"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_714700",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Yuki Zhao (ID: 43) applied",
+    "user": "yukizhao@outlook.com",
+    "entity_id": 43,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-13"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_728741",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Rahul Zhou (ID: 44) applied",
+    "user": "rahulzhou@outlook.com",
+    "entity_id": 44,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-06"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_742055",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Antoine Richard (ID: 45) applied",
+    "user": "antoine.richard@gmail.com",
+    "entity_id": 45,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-08"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_755719",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Anna Dubois (ID: 46) applied",
+    "user": "anna.dubois@gmail.com",
+    "entity_id": 46,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-11"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_770071",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Jessica Garcia (ID: 47) applied",
+    "user": "garciajessica@hotmail.com",
+    "entity_id": 47,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-01"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_782640",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Lisa Miller (ID: 48) applied",
+    "user": "lisamiller@outlook.com",
+    "entity_id": 48,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-19"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_800510",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Zara Al-Ahmad (ID: 49) applied",
+    "user": "zaraal-ahmad@outlook.com",
+    "entity_id": 49,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-10"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_817559",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Naoko Dubois (ID: 50) applied",
+    "user": "duboisnaoko@hotmail.com",
+    "entity_id": 50,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-18"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_833470",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Tariq Sharma (ID: 51) applied",
+    "user": "sharmatariq@hotmail.com",
+    "entity_id": 51,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-26"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_847256",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Youssef Singh (ID: 52) applied",
+    "user": "youssef82@yahoo.com",
+    "entity_id": 52,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-25"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_862438",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Zhao Wu (ID: 53) applied",
+    "user": "zhaowu@outlook.com",
+    "entity_id": 53,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-27"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_881644",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Wu Bernard (ID: 54) applied",
+    "user": "bernardwu@hotmail.com",
+    "entity_id": 54,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-29"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_901509",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Rekha Liu (ID: 55) applied",
+    "user": "rekha53@yahoo.com",
+    "entity_id": 55,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-08-04"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_917504",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate David Leroy (ID: 56) applied",
+    "user": "david17@yahoo.com",
+    "entity_id": 56,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-04"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_934805",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Olivia Kobayashi (ID: 57) applied",
+    "user": "olivia75@yahoo.com",
+    "entity_id": 57,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-17"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_956259",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sarah Chen (ID: 58) applied",
+    "user": "sarahchen@outlook.com",
+    "entity_id": 58,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-17"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_970913",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Michael Dubois (ID: 59) applied",
+    "user": "michaeldubois@outlook.com",
+    "entity_id": 59,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-03"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144442_985429",
+    "timestamp": "2025-08-08 14:44:42",
+    "activity_type": "candidate_created",
+    "description": "Candidate Vikash Zhou (ID: 60) applied",
+    "user": "vikashzhou@outlook.com",
+    "entity_id": 60,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-25"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:42"
+  },
+  {
+    "id": "act_20250808_144443_003629",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Rajesh Al-Najjar (ID: 61) applied",
+    "user": "al-najjarrajesh@hotmail.com",
+    "entity_id": 61,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-09"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_022279",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Yoko Brown (ID: 62) applied",
+    "user": "brownyoko@hotmail.com",
+    "entity_id": 62,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-21"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_040181",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Waleed Takahashi (ID: 63) applied",
+    "user": "takahashiwaleed@hotmail.com",
+    "entity_id": 63,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-21"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_056936",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Layla Wang (ID: 64) applied",
+    "user": "wanglayla@hotmail.com",
+    "entity_id": 64,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-22"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_076475",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Arjun Garcia (ID: 65) applied",
+    "user": "arjungarcia@outlook.com",
+    "entity_id": 65,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-13"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_111075",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sarah Kumar (ID: 66) applied",
+    "user": "sarah.kumar@gmail.com",
+    "entity_id": 66,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-18"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_142432",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Liu Al-Ahmad (ID: 67) applied",
+    "user": "liual-ahmad@outlook.com",
+    "entity_id": 67,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-11"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_163979",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Layla Suzuki (ID: 68) applied",
+    "user": "layla97@yahoo.com",
+    "entity_id": 68,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-29"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_179652",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Michael Yamamoto (ID: 69) applied",
+    "user": "michael.yamamoto@gmail.com",
+    "entity_id": 69,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-18"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_197719",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Zhao Johnson (ID: 70) applied",
+    "user": "johnsonzhao@hotmail.com",
+    "entity_id": 70,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-28"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_213401",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Majid Thomas (ID: 71) applied",
+    "user": "majid.thomas@gmail.com",
+    "entity_id": 71,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-15"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_229768",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Li Al-Mahmoud (ID: 72) applied",
+    "user": "lial-mahmoud@outlook.com",
+    "entity_id": 72,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-28"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_243912",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Satoshi Moreau (ID: 73) applied",
+    "user": "satoshi60@yahoo.com",
+    "entity_id": 73,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-10"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_257043",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Wang Durand (ID: 74) applied",
+    "user": "wangdurand@outlook.com",
+    "entity_id": 74,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-08-04"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_270003",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Rohan Al-Najjar (ID: 75) applied",
+    "user": "rohanal-najjar@outlook.com",
+    "entity_id": 75,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-22"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_283254",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Tariq Smith (ID: 76) applied",
+    "user": "tariq43@yahoo.com",
+    "entity_id": 76,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-11"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_297900",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Marie Al-Rashid (ID: 77) applied",
+    "user": "al-rashidmarie@hotmail.com",
+    "entity_id": 77,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-21"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_313969",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Hala Al-Hassan (ID: 78) applied",
+    "user": "hala.al-hassan@gmail.com",
+    "entity_id": 78,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-26"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_326560",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sanjay Tanaka (ID: 79) applied",
+    "user": "sanjay.tanaka@gmail.com",
+    "entity_id": 79,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-13"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_340799",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sophie Miller (ID: 80) applied",
+    "user": "sophie.miller@gmail.com",
+    "entity_id": 80,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-17"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_359743",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Wu Richard (ID: 81) applied",
+    "user": "wu.richard@gmail.com",
+    "entity_id": 81,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-18"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_373595",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Omar Yoshida (ID: 82) applied",
+    "user": "omar.yoshida@gmail.com",
+    "entity_id": 82,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-29"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_387355",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Masaki Bernard (ID: 83) applied",
+    "user": "masakibernard@outlook.com",
+    "entity_id": 83,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-15"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_402627",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate John Yamamoto (ID: 84) applied",
+    "user": "john50@yahoo.com",
+    "entity_id": 84,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-02"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_417601",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate William Ito (ID: 85) applied",
+    "user": "william.ito@gmail.com",
+    "entity_id": 85,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-21"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_431874",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Lina Zhang (ID: 86) applied",
+    "user": "linazhang@outlook.com",
+    "entity_id": 86,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-03"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_448191",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Priya Sharma (ID: 87) applied",
+    "user": "priya63@yahoo.com",
+    "entity_id": 87,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-30"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_465165",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Marie Kobayashi (ID: 88) applied",
+    "user": "marie.kobayashi@gmail.com",
+    "entity_id": 88,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-04"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_480913",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Anna Jain (ID: 89) applied",
+    "user": "jainanna@hotmail.com",
+    "entity_id": 89,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-24"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_496772",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Salma Huang (ID: 90) applied",
+    "user": "salma56@yahoo.com",
+    "entity_id": 90,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-29"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_512752",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sunita Patel (ID: 91) applied",
+    "user": "patelsunita@hotmail.com",
+    "entity_id": 91,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-05"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_531824",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Rekha Huang (ID: 92) applied",
+    "user": "huangrekha@hotmail.com",
+    "entity_id": 92,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-06"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_547596",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Sophia Tanaka (ID: 93) applied",
+    "user": "sophia75@yahoo.com",
+    "entity_id": 93,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-05-07"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_562083",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Pierre Al-Hassan (ID: 94) applied",
+    "user": "pierre.al-hassan@gmail.com",
+    "entity_id": 94,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-31"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_581229",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Mansour Zhao (ID: 95) applied",
+    "user": "zhaomansour@hotmail.com",
+    "entity_id": 95,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-02"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_599117",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Richard Gupta (ID: 96) applied",
+    "user": "guptarichard@hotmail.com",
+    "entity_id": 96,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-08"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_618238",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Manoj Zhou (ID: 97) applied",
+    "user": "manoj88@yahoo.com",
+    "entity_id": 97,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-13"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_644483",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Yoko Yoshida (ID: 98) applied",
+    "user": "yokoyoshida@outlook.com",
+    "entity_id": 98,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-20"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_669213",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Youssef Kobayashi (ID: 99) applied",
+    "user": "youssefkobayashi@outlook.com",
+    "entity_id": 99,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-02-28"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_685893",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Hiroshi Al-Khoury (ID: 100) applied",
+    "user": "hiroshi63@yahoo.com",
+    "entity_id": 100,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-04-11"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_703005",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Richard Al-Mansouri (ID: 101) applied",
+    "user": "al-mansouririchard@hotmail.com",
+    "entity_id": 101,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-06-10"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_717757",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Abdul Singh (ID: 102) applied",
+    "user": "singhabdul@hotmail.com",
+    "entity_id": 102,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-31"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_737505",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Reem Wu (ID: 103) applied",
+    "user": "wureem@hotmail.com",
+    "entity_id": 103,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-07-27"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_753905",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "candidate_created",
+    "description": "Candidate Ibrahim Yang (ID: 104) applied",
+    "user": "ibrahim25@yahoo.com",
+    "entity_id": 104,
+    "entity_type": "candidate",
+    "details": {
+      "migrated": true,
+      "original_date": "2025-03-25"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_772863",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'SP3D Admin.' posted",
+    "user": "mike",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Digitization"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_798157",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'SP3D Designer' posted",
+    "user": "mike",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Digital"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_826744",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'SP3D Admin' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Piping"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_859070",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'Sr. SP3D Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Civil/Structural"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_885093",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'Sr. SP3D Admin.' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "E&I"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_906503",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'SPI Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "I&C"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_940323",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'SPI Admin' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "I&C"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144443_971722",
+    "timestamp": "2025-08-08 14:44:43",
+    "activity_type": "job_posted",
+    "description": "Job 'SPI Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "I&C"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:43"
+  },
+  {
+    "id": "act_20250808_144444_005235",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'SPI Admin' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "I&C"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_033230",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'Sr. SPI Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "I&C"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_055248",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'Sr. SPI Admin' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "I&C"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_086797",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'SPEL Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Electrical"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_116020",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'SPEL Admin' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Electrical"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_135856",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'SPEL Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Electrical"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_162357",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'SPEL Admin' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Electrical"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_183140",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'Sr. SPEL Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Electrical"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_202963",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'Sr. SPEL Admin' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Electrical"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144444_236868",
+    "timestamp": "2025-08-08 14:44:44",
+    "activity_type": "job_posted",
+    "description": "Job 'SPPID Designer' posted",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "job",
+    "details": {
+      "migrated": true,
+      "department": "Process"
+    },
+    "date": "2025-08-08",
+    "time": "14:44:44"
+  },
+  {
+    "id": "act_20250808_144654_693734",
+    "timestamp": "2025-08-08 14:46:54",
+    "activity_type": "candidate_status_updated",
+    "description": "Candidate John Doe (ID: C001) status_updated",
+    "user": "kevin",
+    "entity_id": "C001",
+    "entity_type": "candidate",
+    "details": {
+      "old_status": "Applied",
+      "new_status": "Interview Scheduled"
+    },
+    "date": "2025-08-08",
+    "time": "14:46:54"
+  },
+  {
+    "id": "act_20250808_144654_697102",
+    "timestamp": "2025-08-08 14:46:54",
+    "activity_type": "job_posted",
+    "description": "Job 'Senior Python Developer' (ID: J005) posted",
+    "user": "kevin",
+    "entity_id": "J005",
+    "entity_type": "job",
+    "details": {
+      "department": "Engineering",
+      "location": "Remote"
+    },
+    "date": "2025-08-08",
+    "time": "14:46:54"
+  },
+  {
+    "id": "act_20250808_144654_714903",
+    "timestamp": "2025-08-08 14:46:54",
+    "activity_type": "system_backup_completed",
+    "description": "Daily database backup completed successfully",
+    "user": "system",
+    "entity_id": null,
+    "entity_type": "system",
+    "details": {},
+    "date": "2025-08-08",
+    "time": "14:46:54"
+  },
+  {
+    "id": "act_20250808_144654_734090",
+    "timestamp": "2025-08-08 14:46:54",
+    "activity_type": "analytics_view",
+    "description": "User kevin viewed hiring_success_rate analytics",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "analytics",
+    "details": {
+      "dashboard_section": "quick_actions"
+    },
+    "date": "2025-08-08",
+    "time": "14:46:54"
+  },
+  {
+    "id": "act_20250808_145940_463703",
+    "timestamp": "2025-08-08 14:59:40",
+    "activity_type": "candidate_status_updated",
+    "description": "Candidate John Doe (ID: C001) status_updated",
+    "user": "kevin",
+    "entity_id": "C001",
+    "entity_type": "candidate",
+    "details": {
+      "old_status": "Applied",
+      "new_status": "Interview Scheduled"
+    },
+    "date": "2025-08-08",
+    "time": "14:59:40"
+  },
+  {
+    "id": "act_20250808_145940_466951",
+    "timestamp": "2025-08-08 14:59:40",
+    "activity_type": "job_posted",
+    "description": "Job 'Senior Python Developer' (ID: J005) posted",
+    "user": "kevin",
+    "entity_id": "J005",
+    "entity_type": "job",
+    "details": {
+      "department": "Engineering",
+      "location": "Remote"
+    },
+    "date": "2025-08-08",
+    "time": "14:59:40"
+  },
+  {
+    "id": "act_20250808_145940_485217",
+    "timestamp": "2025-08-08 14:59:40",
+    "activity_type": "system_backup_completed",
+    "description": "Daily database backup completed successfully",
+    "user": "system",
+    "entity_id": null,
+    "entity_type": "system",
+    "details": {},
+    "date": "2025-08-08",
+    "time": "14:59:40"
+  },
+  {
+    "id": "act_20250808_145940_503669",
+    "timestamp": "2025-08-08 14:59:40",
+    "activity_type": "analytics_view",
+    "description": "User kevin viewed hiring_success_rate analytics",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "analytics",
+    "details": {
+      "dashboard_section": "quick_actions"
+    },
+    "date": "2025-08-08",
+    "time": "14:59:40"
+  },
+  {
+    "id": "act_20250808_145940_516488",
+    "timestamp": "2025-08-08 14:59:40",
+    "activity_type": "candidate_interview_scheduled",
+    "description": "Candidate Sarah Smith (ID: C002) interview_scheduled",
+    "user": "mike",
+    "entity_id": "C002",
+    "entity_type": "candidate",
+    "details": {
+      "interview_date": "2025-08-09",
+      "interview_time": "10:00 AM"
+    },
+    "date": "2025-08-08",
+    "time": "14:59:40"
+  },
+  {
+    "id": "act_20250808_150331_602378",
+    "timestamp": "2025-08-08 15:03:31",
+    "activity_type": "candidate_status_updated",
+    "description": "Candidate John Doe (ID: C001) status_updated",
+    "user": "kevin",
+    "entity_id": "C001",
+    "entity_type": "candidate",
+    "details": {
+      "old_status": "Applied",
+      "new_status": "Interview Scheduled"
+    },
+    "date": "2025-08-08",
+    "time": "15:03:31"
+  },
+  {
+    "id": "act_20250808_150331_605376",
+    "timestamp": "2025-08-08 15:03:31",
+    "activity_type": "job_posted",
+    "description": "Job 'Senior Python Developer' (ID: J005) posted",
+    "user": "kevin",
+    "entity_id": "J005",
+    "entity_type": "job",
+    "details": {
+      "department": "Engineering",
+      "location": "Remote"
+    },
+    "date": "2025-08-08",
+    "time": "15:03:31"
+  },
+  {
+    "id": "act_20250808_150331_619399",
+    "timestamp": "2025-08-08 15:03:31",
+    "activity_type": "analytics_view",
+    "description": "User kevin viewed hiring_success_rate analytics",
+    "user": "kevin",
+    "entity_id": null,
+    "entity_type": "analytics",
+    "details": {
+      "dashboard_section": "quick_actions"
+    },
+    "date": "2025-08-08",
+    "time": "15:03:31"
+  },
+  {
+    "id": "act_20250808_151357_145554",
+    "timestamp": "2025-08-08 15:13:57",
+    "activity_type": "chat_interaction",
+    "description": "User  asked: How long to hire 20 more employees?",
+    "user": "",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "How long to hire 20 more employees?",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "15:13:57"
+  },
+  {
+    "id": "act_20250808_161034_638886",
+    "timestamp": "2025-08-08 16:10:34",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: Show me our hiring success rate",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "Show me our hiring success rate",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:10:34"
+  },
+  {
+    "id": "act_20250808_161429_975634",
+    "timestamp": "2025-08-08 16:14:29",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: Analyze monthly hiring performance trends",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "Analyze monthly hiring performance trends",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:14:29"
+  },
+  {
+    "id": "act_20250808_161530_417211",
+    "timestamp": "2025-08-08 16:15:30",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: Who are our top performers?",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "Who are our top performers?",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:15:30"
+  },
+  {
+    "id": "act_20250808_161627_440372",
+    "timestamp": "2025-08-08 16:16:27",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: Analyze salary trends and competitiveness",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "Analyze salary trends and competitiveness",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:16:27"
+  },
+  {
+    "id": "act_20250808_161748_434302",
+    "timestamp": "2025-08-08 16:17:48",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: the avg salary  offered during july",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "the avg salary  offered during july",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:17:48"
+  },
+  {
+    "id": "act_20250808_161922_317480",
+    "timestamp": "2025-08-08 16:19:22",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: create a chart comparing may and june",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "create a chart comparing may and june",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:19:22"
+  },
+  {
+    "id": "act_20250808_161959_579071",
+    "timestamp": "2025-08-08 16:19:59",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: hiring success rate",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "hiring success rate",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:19:59"
+  },
+  {
+    "id": "act_20250808_162035_435127",
+    "timestamp": "2025-08-08 16:20:35",
+    "activity_type": "chat_interaction",
+    "description": "User op_mgr asked: create a chart comparing may and june hiring success rate",
+    "user": "op_mgr",
+    "entity_id": null,
+    "entity_type": "chat",
+    "details": {
+      "query": "create a chart comparing may and june hiring success rate",
+      "response_type": "assistant"
+    },
+    "date": "2025-08-08",
+    "time": "16:20:35"
+  }
+]

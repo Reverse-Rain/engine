@@ -1,0 +1,490 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    color: #23272f;
+    background: #ffffff !important;
+  }
+  *, *::before, *::after {
+    color: #23272f !important;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+  }
+  .dashboard-flex-main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: stretch;
+    width: 100vw;
+    min-height: 90vh;
+    box-sizing: border-box;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    background: #ffffff !important;
+  }
+  .dashboard-analytics {
+    flex: 1 1 0;
+    padding: 32px 0 0 0;
+    max-width: 100vw;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #ffffff !important;
+  }
+  .dashboard-bot {
+    width: 420px;
+    min-width: 320px;
+    max-width: 80vw;
+    height: 100vh;
+    background: #ffffff;
+    border-left: 1.5px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: 0;
+    overflow: hidden;
+    transition: border-left 0.2s ease;
+  }
+
+  .dashboard-bot:hover {
+    border-left: 2px solid #1976d2;
+  }
+
+  .dashboard-bot iframe {
+    width: 100%;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
+    display: block;
+  }
+  @media (max-width: 1100px) {
+    .dashboard-flex-main {
+      flex-direction: column;
+    }
+    .dashboard-bot {
+      width: 100vw !important;
+      min-width: 0;
+      max-width: 100vw;
+      height: 60vh;
+      border-left: none;
+      border-top: 1.5px solid #ffffff;
+      position: static;
+      resize: none;
+    }
+    .dashboard-bot .resize-handle {
+      display: none;
+    }
+    .dashboard-bot iframe {
+      height: 60vh;
+    }
+    .dashboard-analytics {
+      padding: 24px 8px 0 8px;
+    }
+  }
+</style>
+
+<div class="dashboard-flex-main">
+  
+
+  <div class="dashboard-analytics"style="display: flex; flex-direction: column;">
+    <!-- Analytics Chart -->
+    <div style="width:100%; max-width:600px; margin:0 auto 0 auto; display:flex; justify-content:center;">
+      <!-- Line Chart for Vacancies vs Hired -->
+      <div style="width:100%; max-width:500px;">
+        <div class="selector-row" style="margin-bottom:6px; display:flex; gap:16px; align-items:center; justify-content:center; flex-wrap:wrap;">
+          <div style="display:flex; gap:8px; align-items:center;">
+            <label for="dataTypeSelect"><b>Data Type:</b></label>
+            <select id="dataTypeSelect">
+              <option value="overall">Overall</option>
+              <option value="active">Active</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <label for="periodSelect"><b>Show for:</b></label>
+            <select id="periodSelect">
+              <option value="month">Months</option>
+              <option value="week">Weeks</option>
+              <option value="day">Days</option>
+            </select>
+          </div>
+        </div>
+        <h2 style="color:#1976d2; margin-bottom:8px; font-size:1.1rem; text-align:center;">Vacancies vs Hired</h2>
+        <div class="linechart-wrapper" style="width:100%; max-width:500px; margin-bottom:0;">
+          <canvas id="vacancyHiredLineChart" width="400" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Milestones & Key Metrics -->
+    <div style="width:100%; max-width:900px; margin:36px auto 10px auto; text-align:center;">
+      <h2 style="font-size:1.5rem; color:#1976d2; font-weight:700; margin-bottom:4px;">Milestones & Key Metrics</h2>
+    </div>
+    <div id="metricsSection" style="width:100%; max-width:1200px; margin:32px auto 0 auto; display:flex; gap:20px; justify-content:center; align-items:center; flex-wrap:wrap;">
+      <div style="flex:1; min-width:140px; text-align:center;">
+        <a href="/milestones_breakup/total_applicants" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div id="countApplicants" style="font-size:2.1rem; font-weight:700; color:#1976d2;">0</div>
+          <div style="font-size:1.05rem; color:#444;">Total Applicants</div>
+        </a>
+      </div>
+      <div style="flex:1; min-width:140px; text-align:center;">
+        <a href="/milestones_breakup/total_vacancies" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div id="countVacancies" style="font-size:2.1rem; font-weight:700; color:#ff9800;">0</div>
+          <div style="font-size:1.05rem; color:#444;">Total Vacancies</div>
+        </a>
+      </div>
+      <div style="flex:1; min-width:140px; text-align:center;">
+        <a href="/milestones_breakup/hired" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div id="countHired" style="font-size:2.1rem; font-weight:700; color:#43a047;">0</div>
+          <div style="font-size:1.05rem; color:#444;">Hired</div>
+        </a>
+      </div>
+      <div style="flex:1; min-width:140px; text-align:center;">
+        <a href="/milestones_breakup/hiring_success_rate" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div id="countHiringSuccess" style="font-size:2.1rem; font-weight:700; color:#9c27b0;">0%</div>
+          <div style="font-size:1.05rem; color:#444;">Hiring Success Rate</div>
+        </a>
+      </div>
+      <div style="flex:1; min-width:140px; text-align:center;">
+        <a href="/milestones_breakup/hiring_pace" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div id="hiringPace" style="font-size:2.1rem; font-weight:700; color:#607d8b;">{{ hiring_pace|default('Good') }}</div>
+          <div style="font-size:1.05rem; color:#444;">Hiring Pace</div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-bot">
+    <!-- Custom resize handle -->
+    <div class="resize-handle" style="
+      position: absolute;
+      left: -3px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 80px;
+      background: rgba(25, 118, 210, 0.4);
+      border-radius: 0 4px 4px 0;
+      cursor: ew-resize;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+    ">
+      <div style="
+        width: 3px;
+        height: 30px;
+        background: rgba(25, 118, 210, 0.8);
+        border-radius: 1.5px;
+      "></div>
+    </div>
+    <iframe src="http://127.0.0.1:5001" frameborder="0">
+      Your browser does not support iframes.
+    </iframe>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Line Chart for Vacancies vs Hired vs Applicants
+let vacancyHiredLabels, overallVacanciesData, overallHiredData, overallApplicantsData, activeVacanciesData, activeHiredData, activeApplicantsData;
+try {
+  vacancyHiredLabels = JSON.parse('{{ vacancy_hired_labels_json | safe }}');
+  overallVacanciesData = JSON.parse('{{ overall_vacancies_data_json | safe }}');
+  overallHiredData = JSON.parse('{{ overall_hired_data_json | safe }}');
+  overallApplicantsData = JSON.parse('{{ overall_applicants_data_json | safe }}');
+  activeVacanciesData = JSON.parse('{{ active_vacancies_data_json | safe }}');
+  activeHiredData = JSON.parse('{{ active_hired_data_json | safe }}');
+  activeApplicantsData = JSON.parse('{{ active_applicants_data_json | safe }}');
+} catch (e) {
+  console.error('Error parsing chart data:', e);
+}
+
+let lineChartInstance = null;
+function renderLineChart(labels, vacancies, hired, applicants, dataType) {
+  const canvas = document.getElementById('vacancyHiredLineChart');
+  if (!canvas) {
+    console.error('Line chart canvas not found');
+    return;
+  }
+  const ctx = canvas.getContext('2d');
+  if (lineChartInstance) lineChartInstance.destroy();
+  if (!labels || !vacancies || !hired || !applicants) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '14px sans-serif';
+    ctx.fillText('No data available', 10, 30);
+    return;
+  }
+  
+  const applicantLabel = dataType === 'active' ? 'Active Applicants' : 'Total Applicants';
+  const vacancyLabel = dataType === 'active' ? 'Active Vacancies' : 'Total Vacancies';
+  const hiredLabel = dataType === 'active' ? 'Recently Hired' : 'Total Hired';
+  
+  lineChartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: vacancyLabel,
+          data: vacancies,
+          borderColor: '#1976d2',
+          backgroundColor: 'rgba(25, 118, 210, 0.1)',
+          fill: false,
+          tension: 0.3
+        },
+        {
+          label: hiredLabel,
+          data: hired,
+          borderColor: '#43a047',
+          backgroundColor: 'rgba(67, 160, 71, 0.1)',
+          fill: false,
+          tension: 0.3
+        },
+        {
+          label: applicantLabel,
+          data: applicants,
+          borderColor: '#ff9800',
+          backgroundColor: 'rgba(255, 152, 0, 0.1)',
+          fill: false,
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: true },
+        title: { display: false }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Period' } },
+        y: { title: { display: true, text: 'Count' }, beginAtZero: true }
+      }
+    }
+  });
+}
+
+// Function to update chart based on current selections
+function updateChart() {
+  const period = document.getElementById('periodSelect').value;
+  const dataType = document.getElementById('dataTypeSelect').value;
+  
+  if (vacancyHiredLabels && overallVacanciesData && overallHiredData && overallApplicantsData && activeVacanciesData && activeHiredData && activeApplicantsData) {
+    const vacanciesData = dataType === 'active' ? activeVacanciesData : overallVacanciesData;
+    const hiredData = dataType === 'active' ? activeHiredData : overallHiredData;
+    const applicantsData = dataType === 'active' ? activeApplicantsData : overallApplicantsData;
+    
+    renderLineChart(
+      vacancyHiredLabels[period], 
+      vacanciesData[period], 
+      hiredData[period], 
+      applicantsData[period],
+      dataType
+    );
+  }
+}
+
+// Initial render
+if (vacancyHiredLabels && overallVacanciesData && overallHiredData && overallApplicantsData) {
+  renderLineChart(vacancyHiredLabels.month, overallVacanciesData.month, overallHiredData.month, overallApplicantsData.month, 'overall');
+}
+
+// Event listeners for dropdowns
+const periodSelect = document.getElementById('periodSelect');
+const dataTypeSelect = document.getElementById('dataTypeSelect');
+
+if (periodSelect) {
+  periodSelect.addEventListener('change', updateChart);
+}
+
+if (dataTypeSelect) {
+  dataTypeSelect.addEventListener('change', updateChart);
+}
+</script>
+
+<script>
+// Count-up animation for metrics
+function animateCount(id, end, suffix = '', duration = 3000) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isPercent = suffix === '%';
+  const start = 0;
+  const startTime = performance.now();
+  function update(now) {
+    const elapsed = now - startTime;
+    let progress = Math.min(elapsed / duration, 1);
+    let value = Math.floor(start + (end - start) * progress);
+    if (isPercent) value = Math.min(value, end);
+    el.textContent = value + suffix;
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = end + suffix;
+    }
+  }
+  requestAnimationFrame(update);
+}
+window.addEventListener('DOMContentLoaded', function() {
+  animateCount('countApplicants', Number('{{ total_applicants|default(0)|int }}'), '', 2000);
+  animateCount('countVacancies', Number('{{ total_vacancies|default(0)|int }}'), '', 2000);
+  animateCount('countHired', Number('{{ total_hired|default(0)|int }}'), '', 2000);
+  animateCount('countHiringSuccess', Number('{{ hiring_success_rate|default(0)|int }}'), '%', 2000);
+  
+  // Style hiring pace based on value
+  const hiringPaceEl = document.getElementById('hiringPace');
+  if (hiringPaceEl) {
+    const pace = hiringPaceEl.textContent.trim();
+    if (pace === 'Good') {
+      hiringPaceEl.style.color = '#43a047';  // Green
+    } else if (pace === 'Adequate') {
+      hiringPaceEl.style.color = '#ff9800';  // Orange
+    } else if (pace === 'Inadequate') {
+      hiringPaceEl.style.color = '#f44336';  // Red
+    }
+  }
+});
+</script>
+
+<script>
+// Chatbot panel resize functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const resizeHandle = document.querySelector('.resize-handle');
+  const chatbotPanel = document.querySelector('.dashboard-bot');
+  let isResizing = false;
+  let startX = 0;
+  let startWidth = 0;
+
+  if (resizeHandle && chatbotPanel) {
+    // Enhanced resize handle hover effects
+    resizeHandle.addEventListener('mouseenter', function() {
+      this.style.background = 'rgba(25, 118, 210, 0.6)';
+      this.style.width = '10px';
+      this.style.left = '-4px';
+      const indicator = this.querySelector('div');
+      if (indicator) {
+        indicator.style.background = 'rgba(25, 118, 210, 1)';
+        indicator.style.width = '4px';
+        indicator.style.height = '40px';
+      }
+    });
+
+    resizeHandle.addEventListener('mouseleave', function() {
+      if (!isResizing) {
+        this.style.background = 'rgba(25, 118, 210, 0.4)';
+        this.style.width = '8px';
+        this.style.left = '-3px';
+        const indicator = this.querySelector('div');
+        if (indicator) {
+          indicator.style.background = 'rgba(25, 118, 210, 0.8)';
+          indicator.style.width = '3px';
+          indicator.style.height = '30px';
+        }
+      }
+    });
+
+    // Mouse down on resize handle
+    resizeHandle.addEventListener('mousedown', function(e) {
+      isResizing = true;
+      startX = e.clientX;
+      startWidth = parseInt(document.defaultView.getComputedStyle(chatbotPanel).width, 10);
+      
+      // Add visual feedback during resize
+      document.body.style.cursor = 'ew-resize';
+      document.body.style.userSelect = 'none';
+      chatbotPanel.style.transition = 'none';
+      
+      // Add overlay to prevent iframe interference
+      const overlay = document.createElement('div');
+      overlay.id = 'resize-overlay';
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.01);
+        z-index: 9999;
+        cursor: ew-resize;
+      `;
+      document.body.appendChild(overlay);
+      
+      e.preventDefault();
+    });
+
+    // Mouse move for resizing
+    document.addEventListener('mousemove', function(e) {
+      if (!isResizing) return;
+      
+      // Calculate the difference: moving left increases width, moving right decreases width
+      const dx = startX - e.clientX;
+      const newWidth = Math.max(320, Math.min(window.innerWidth * 0.8, startWidth + dx));
+      
+      chatbotPanel.style.width = newWidth + 'px';
+      
+      // Update Chart.js charts if they exist to handle responsive resize
+      if (typeof Chart !== 'undefined' && lineChartInstance) {
+        setTimeout(() => {
+          lineChartInstance.resize();
+        }, 10);
+      }
+    });
+
+    // Mouse up to stop resizing
+    document.addEventListener('mouseup', function() {
+      if (isResizing) {
+        isResizing = false;
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        chatbotPanel.style.transition = '';
+        
+        // Remove overlay
+        const overlay = document.getElementById('resize-overlay');
+        if (overlay) {
+          overlay.remove();
+        }
+        
+        // Reset resize handle appearance
+        resizeHandle.style.background = 'rgba(25, 118, 210, 0.3)';
+        resizeHandle.style.width = '6px';
+        const indicator = resizeHandle.querySelector('div');
+        if (indicator) {
+          indicator.style.background = 'rgba(25, 118, 210, 0.6)';
+          indicator.style.width = '2px';
+        }
+        
+        // Final chart resize
+        if (typeof Chart !== 'undefined' && lineChartInstance) {
+          setTimeout(() => {
+            lineChartInstance.resize();
+          }, 100);
+        }
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      if (typeof Chart !== 'undefined' && lineChartInstance) {
+        lineChartInstance.resize();
+      }
+    });
+  }
+});
+</script>
+
+{% endblock %}

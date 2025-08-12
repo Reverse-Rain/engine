@@ -1,0 +1,73 @@
+/* recent_activities.css - Modern card-based activity feed */
+.recent-activity-section {
+  max-width: 820px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(31,38,135,0.08);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+.recent-activity-section h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #8B5CF6;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.2px;
+}
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.2rem 0;
+}
+.activity-list li {
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 1.1rem;
+  padding: 1.1rem 1.3rem 1.1rem 1.3rem;
+  box-shadow: 0 2px 8px 0 rgba(31,38,135,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: box-shadow 0.2s;
+}
+.activity-list li:hover {
+  box-shadow: 0 4px 16px 0 rgba(139,92,246,0.10);
+}
+.activity-meta {
+  font-size: 0.98rem;
+  color: #222;
+  font-weight: 500;
+}
+.activity-user {
+  font-size: 0.92rem;
+  color: #8B5CF6;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+.activity-date {
+  font-size: 0.88rem;
+  color: #888;
+  margin-left: 0.5rem;
+}
+.no-activity {
+  color: #aaa;
+  font-size: 1.05rem;
+  text-align: center;
+  margin: 2.5rem 0 2.5rem 0;
+}
+.recent-activity-section .btn-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #8B5CF6;
+  background: none;
+  border: none;
+  font-size: 1.05rem;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.recent-activity-section .btn-link:hover {
+  color: #A855F7;
+}

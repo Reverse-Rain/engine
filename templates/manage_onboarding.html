@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% block title %}Manage Onboarding{% endblock %}
+{% block content %}
+<style>
+    .view-switcher {
+        text-align: right;
+        margin-bottom: 16px;
+    }
+    .view-switcher button {
+        background-color: #fff;
+        border: 1px solid #eaeaea;
+        color: #333;
+        padding: 6px 14px;
+        border-radius: 6px;
+        margin-left: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 15px;
+        font-weight: 500;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .view-switcher button.active {
+        background-color: #f2f2f2;
+        color: #007bff;
+        border-color: #007bff;
+        box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+    }
+    .table-container {
+        padding: 24px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        margin-top: 24px;
+    }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .table th, .table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid #eaeaea;
+        vertical-align: top;
+        position: relative;
+        font-size: 15px;
+    }
+    .table thead th {
+        background-color: #f9f9f9;
+        font-weight: 600;
+        color: #333;
+    }
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    .onboarding-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        padding: 24px;
+        margin-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        border: 1px solid #f0f0f0;
+    }
+    .onboarding-card .progress {
+        height: 18px;
+        background: #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .onboarding-card .progress-bar {
+        background: linear-gradient(90deg, #4f46e5 60%, #818cf8 100%);
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 8px;
+        height: 100%;
+        transition: width 0.3s;
+    }
+    .onboarding-card .actions {
+        margin-top: 8px;
+    }
+</style>
+<div class="container mt-4">
+    <h2 style="margin-top: 5%;">Onboarding </h2>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Candidate Name</th>
+                    <th>Email</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                    <th>Onboarding Progress</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidate in candidates_list if candidate.status in ['Hired', 'Onboarding'] %}
+                <tr>
+                    <td>{{ candidate.name }}</td>
+                    <td>{{ candidate.email }}</td>
+                    <td>{{ candidate.position }}</td>
+                                        <td>
+                                            {% if candidate.status == 'Onboarding' %}
+                                                <span class="badge bg-info" style="background:#e0f7fa;color:#006064;">Onboarding</span>
+                                            {% elif candidate.status == 'Hired' %}
+                                                <span class="badge bg-success">Hired</span>
+                                            {% elif candidate.status == 'Resigned' %}
+                                                <span class="badge bg-secondary">Resigned</span>
+                                            {% elif candidate.status == 'Fired' %}
+                                                <span class="badge bg-danger">Fired</span>
+                                            {% else %}
+                                                <span class="badge bg-light">{{ candidate.status }}</span>
+                                            {% endif %}
+                                        </td>
+                    <td>
+                        {% if candidate.onboarding %}
+                            {% set completed = candidate.onboarding.values()|select('equalto', 'Completed')|list|length %}
+                            {% set total = candidate.onboarding|length %}
+                            <div class="progress" style="height: 18px; margin-bottom:8px;">
+                                <div class="progress-bar bg-success onboarding-progress-bar" data-completed="{{ completed }}" data-total="{{ total }}" style="width: 0%">
+                                    <span class="progress-label">{{ completed }}/{{ total }} steps</span>
+                                </div>
+                            </div>
+                            <ul class="onboarding-steps" style="list-style:none; padding:0; margin:0;">
+                                {% for step, status in candidate.onboarding.items() %}
+                                <li class="onboarding-step" data-status="{{ status }}">
+                                    <span class="step-dot {% if status=='Completed' %}step-done{% elif status=='In Progress' %}step-inprogress{% endif %}"></span>
+                                    <span class="step-label">{{ step }}</span>
+                                    <span class="step-status">{{ status }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="onboarding-complete-animation" style="display:none;"></div>
+                        {% else %}
+                            <span class="text-warning">Not started</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('candidate_profile', candidate_id=candidate.id) }}" class="btn btn-sm btn-outline-primary">View Profile</a>
+                        {# Probation button removed: endpoint not implemented #}
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="6" class="text-center text-muted">No hired candidates found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</style>
+<style>
+    .onboarding-steps { margin-top: 6px; }
+    .onboarding-step { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; font-size: 14px; }
+    .step-dot { width: 16px; height: 16px; border-radius: 50%; background: #e0e0e0; display: inline-block; transition: background 0.3s; }
+    .step-done { background: linear-gradient(135deg, #4f46e5 60%, #818cf8 100%); box-shadow: 0 0 0 2px #c7d2fe; }
+    .step-inprogress { background: #facc15; box-shadow: 0 0 0 2px #fde68a; }
+    .step-label { font-weight: 500; color: #333; }
+    .step-status { font-size: 12px; color: #888; margin-left: auto; }
+    .onboarding-complete-animation { width: 100%; text-align: center; margin-top: 8px; }
+</style>
+<script>
+// Animate progress bars and show confetti/check when onboarding is complete
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.onboarding-progress-bar').forEach(function(bar) {
+        const completed = parseInt(bar.dataset.completed);
+        const total = parseInt(bar.dataset.total);
+        const percent = total ? Math.round((completed/total)*100) : 0;
+        setTimeout(()=>{
+            bar.style.width = percent + '%';
+        }, 200);
+        // If complete, show animation
+        if (completed === total && total > 0) {
+            const anim = bar.parentElement.parentElement.querySelector('.onboarding-complete-animation');
+            if(anim) {
+                setTimeout(()=>{
+                    anim.innerHTML = `<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#e0f7fa"/><path d="M14 25l7 7 13-13" stroke="#43a047" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style='color:#43a047;font-weight:600;font-size:15px;margin-top:4px;'>Onboarding Complete!</div>`;
+                    anim.style.display = 'block';
+                    // Confetti burst
+                    confettiBurst(anim);
+                }, 700);
+            }
+        }
+    });
+});
+// Simple confetti burst animation
+function confettiBurst(container) {
+    for(let i=0;i<18;i++) {
+        const c = document.createElement('div');
+        c.style.position = 'absolute';
+        c.style.left = '50%';
+        c.style.top = '0';
+        c.style.width = '8px';
+        c.style.height = '8px';
+        c.style.borderRadius = '50%';
+        c.style.background = `hsl(${Math.random()*360},90%,60%)`;
+        c.style.transform = `translate(-50%,0)`;
+        c.style.opacity = 0.85;
+        c.style.pointerEvents = 'none';
+        container.appendChild(c);
+        setTimeout(()=>{
+            c.animate([
+                { transform: 'translate(-50%,0) scale(1)', opacity: 0.85 },
+                { transform: `translate(-50%,${-60-Math.random()*40}px) scale(${0.7+Math.random()*0.6})`, opacity: 0.1 }
+            ], { duration: 1100+Math.random()*400, easing: 'cubic-bezier(.4,.14,.3,1)' });
+            setTimeout(()=>container.removeChild(c), 1400);
+        }, 60*i);
+    }
+}
+</script>
+    
+{% endblock %}
+
+
+</div>
+

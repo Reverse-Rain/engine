@@ -1,0 +1,16 @@
+[
+    {"user_id": 1, "username": "mike", "password": "pass123", "department": "Process and HSE", "role": "Discipline Manager", "email": "dm.proc_hse@company.com", "phone": "+1111111111", "access_control": ["approve_candidates"]},
+    {"user_id": 2, "username": "kevin", "password": "pass123", "department": "Piping & Mechanical", "role": "Discipline Manager", "email": "dm.piping@company.com", "phone": "+1111111112", "access_control": ["approve_candidates"]},
+    {"user_id": 3, "username": "jhon", "password": "pass123", "department": "Civil & Structural", "role": "Discipline Manager", "email": "dm.civil@company.com", "phone": "+1111111113", "access_control": ["approve_candidates"]},
+    {"user_id": 4, "username": "discipline_mgr_elec", "password": "pass123", "department": "Electrical", "role": "Discipline Manager", "email": "dm.elec@company.com", "phone": "+1111111114", "access_control": ["approve_candidates"]},
+    {"user_id": 5, "username": "discipline_mgr_inst", "password": "pass123", "department": "Instrumentation and Control", "role": "Discipline Manager", "email": "dm.inst@company.com", "phone": "+1111111115", "access_control": ["approve_candidates"]},
+    {"user_id": 6, "username": "discipline_mgr_digi", "password": "pass123", "department": "Digitization", "role": "Discipline Manager", "email": "dm.digi@company.com", "phone": "+1111111116", "access_control": ["approve_candidates"]},
+    {"user_id": 7, "username": "discipline_mgr_ai", "password": "pass123", "department": "AI Development", "role": "Discipline Manager", "email": "dm.ai@company.com", "phone": "+1111111117", "access_control": ["approve_candidates"]},
+
+    {"user_id": 8, "username": "sara", "password": "pass123", "department": "Process and HSE", "role": "Department Manager (MOE)", "email": "moe@company.com", "phone": "+1222222221", "access_control": ["approve_candidates"]},
+    {"user_id": 9, "username": "marwa", "password": "pass123", "department": "Piping & Mechanical", "role": "Department Manager (MOP)", "email": "mop@company.com", "phone": "+1222222222", "access_control": ["approve_candidates"]},
+
+    {"user_id": 10, "username": "op_mgr", "password": "pass123", "department": "Operations", "role": "Operation Manager", "email": "opmgr@company.com", "phone": "+1333333333", "access_control": ["approve_candidates"]},
+
+    {"user_id": 11, "username": "ceo", "password": "pass123", "department": "Management", "role": "CEO", "email": "ceo@company.com", "phone": "+1444444444", "access_control": ["approve_candidates"]}
+]

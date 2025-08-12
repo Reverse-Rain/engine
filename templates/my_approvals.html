@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %}My Approvals - {{ role }}{% endblock %}
+
+{% block content %}
+<style>
+	body { background-color:#ffffff; font-family:'Segoe UI',sans-serif; color:#333; }
+	.page-header { background:#fff; color:#333; padding:20px; border:1px solid #e0e0e0; border-radius:10px; margin-bottom:30px; text-align:center; }
+	.page-header h1 { margin:0; font-size:24px; font-weight:600; }
+	.user-role { font-size:14px; color:#666; margin-top:5px; }
+	.stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-bottom:30px; }
+	.stat-card { background:#fff; border:1px solid #e0e0e0; border-radius:10px; padding:20px; text-align:center; }
+	.stat-number { font-size:32px; font-weight:bold; margin-bottom:8px; color:#333; }
+	.stat-label { color:#666; font-size:14px; }
+	.section { background:#fff; border:1px solid #e0e0e0; border-radius:10px; margin-bottom:30px; overflow:hidden; }
+	.section-header { background:#fff; padding:20px; border-bottom:1px solid #e0e0e0; }
+	.section-title { font-size:18px; font-weight:600; color:#333; margin:0; display:flex; align-items:center; gap:10px; }
+	.priority-badge { padding:4px 8px; border:1px solid #e0e0e0; border-radius:12px; font-size:11px; font-weight:500; background:#fff; color:#333; }
+	.approval-card { border:1px solid #e0e0e0; margin:20px; border-radius:8px; background:#fff; transition:all .3s ease; }
+	.approval-card:hover { border-color:#ccc; transform:translateY(-1px); }
+	.approval-header { background:#fff; padding:15px 20px; border-bottom:1px solid #e0e0e0; display:flex; justify-content:space-between; align-items:center; }
+	.candidate-info { display:flex; align-items:center; gap:15px; }
+	.candidate-name { font-size:16px; font-weight:600; margin:0; }
+	.candidate-position { font-size:13px; color:#666; font-style:italic; }
+	.approval-status { padding:6px 12px; border:1px solid #e0e0e0; border-radius:20px; font-size:12px; font-weight:500; background:#fff; }
+	.approval-body { padding:20px; background:#fff; }
+	.approval-message { color:#666; margin-bottom:15px; font-size:14px; line-height:1.5; }
+	.approval-meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:20px; font-size:13px; }
+	.meta-item { color:#666; }
+	.meta-label { font-weight:600; color:#333; }
+	.action-buttons { display:flex; gap:10px; flex-wrap:wrap; }
+	.btn { padding:8px 16px; border:1px solid #e0e0e0; border-radius:5px; font-size:12px; font-weight:500; cursor:pointer; transition:all .3s; text-decoration:none; background:#fff; color:#333; }
+	.btn-approve { background:#f0fff4; color:#2d5a3d; border:1px solid #c3e6cb; }
+	.btn-approve:hover { background:#e6ffed; color:#155724; border-color:#a3d9a5; }
+	.btn-reject { background:#fff5f5; color:#721c24; border:1px solid #f5c6cb; }
+	.btn-reject:hover { background:#ffe6e6; color:#491217; border-color:#f1b0b7; }
+	.btn-view { background:#f0f8ff; color:#004085; border:1px solid #b8daff; }
+	.btn-view:hover { background:#e6f3ff; color:#002752; border-color:#9fcdff; }
+	.no-approvals { padding:40px; text-align:center; color:#666; font-style:italic; background:#fff; }
+	.timestamp { font-size:12px; color:#999; margin-top:10px; }
+	.completed-info { background:#fff; border:1px solid #e0e0e0; border-left:3px solid #ccc; padding:10px 15px; margin-top:10px; border-radius:0 5px 5px 0; }
+	.completed-info.rejected { border-left-color:#999; }
+	.completed-info.on-hold { border-left-color:#999; }
+	@media (max-width:768px){ .stats-row{grid-template-columns:1fr;} .approval-header{flex-direction:column; gap:10px; align-items:flex-start;} .approval-meta{grid-template-columns:1fr;} }
+</style>
+
+<div class="page-header">
+	<h1>My Approvals</h1>
+	<div class="user-role">{{ role }} Dashboard</div>
+</div>
+
+<div class="stats-row">
+	<div class="stat-card">
+		<div class="stat-number pending">{{ pending_approvals|length }}</div>
+		<div class="stat-label">Pending Approvals</div>
+	</div>
+	<div class="stat-card">
+		<div class="stat-number approved">{{ completed_approvals|selectattr('status','equalto','Approved')|list|length }}</div>
+		<div class="stat-label">Approved</div>
+	</div>
+	<div class="stat-card">
+		<div class="stat-number rejected">{{ completed_approvals|selectattr('status','equalto','Rejected')|list|length }}</div>
+		<div class="stat-label">Rejected</div>
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-header">
+		<div class="section-title">🔔 Pending Approvals {% if pending_approvals %}<span class="priority-badge priority-high">{{ pending_approvals|length }} Awaiting Action</span>{% endif %}</div>
+	</div>
+	{% if pending_approvals %}
+		{% for approval in pending_approvals %}
+			<div class="approval-card">
+				<div class="approval-header">
+					<div class="candidate-info">
+						<div>
+							<h3 class="candidate-name">{{ approval.candidate_name }}</h3>
+							<div class="candidate-position">{{ approval.position }}</div>
+						</div>
+						{% if approval.priority == 'high' %}<span class="priority-badge priority-high">HIGH PRIORITY</span>{% endif %}
+					</div>
+					<div class="approval-status status-{{ approval.status.lower() }}">{{ approval.status }}</div>
+				</div>
+				<div class="approval-body">
+					<div class="approval-message">{{ approval.message }}</div>
+					<div class="approval-meta">
+						<div class="meta-item"><span class="meta-label">From:</span> {{ approval.from_role }}</div>
+						<div class="meta-item"><span class="meta-label">Candidate ID:</span> {{ approval.candidate_id }}</div>
+						<div class="meta-item"><span class="meta-label">Type:</span> {{ approval.type.replace('_',' ').title() }}</div>
+						{% if approval.created_by %}<div class="meta-item"><span class="meta-label">Created by:</span> {{ approval.created_by }}</div>{% endif %}
+					</div>
+					<div class="action-buttons">
+						<form method="POST" action="{{ url_for('approve_candidate') }}" style="display:inline;">
+							<input type="hidden" name="candidate_id" value="{{ approval.candidate_id }}">
+							<input type="hidden" name="action" value="approve">
+							<button type="submit" class="btn btn-approve" onclick="return confirm('Approve this candidate?')">✓ Approve</button>
+						</form>
+						<form method="POST" action="{{ url_for('approve_candidate') }}" style="display:inline;">
+							<input type="hidden" name="candidate_id" value="{{ approval.candidate_id }}">
+							<input type="hidden" name="action" value="reject">
+							<button type="submit" class="btn btn-reject" onclick="return confirm('Reject this candidate?')">✗ Reject</button>
+						</form>
+						<a href="{{ url_for('candidate_profile', candidate_id=approval.candidate_id) }}" class="btn btn-view">👤 View Profile</a>
+					</div>
+					<div class="timestamp">Received: {{ approval.timestamp.split('T')[0] }} at {{ approval.timestamp.split('T')[1].split('.')[0] if '.' in approval.timestamp.split('T')[1] else approval.timestamp.split('T')[1] }}</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="no-approvals"><h3>No Pending Approvals</h3><p>No candidates awaiting your approval.</p></div>
+	{% endif %}
+</div>
+
+<div class="section">
+	<div class="section-header">
+		<div class="section-title">✅ My Decisions {% if approved_count %}<span class="priority-badge priority-normal">{{ approved_count }} Completed</span>{% endif %}</div>
+	</div>
+	{% if my_timeline_decisions %}
+		{% for item in my_timeline_decisions[:25] %}
+			<div class="approval-card">
+				<div class="approval-header">
+					<div class="candidate-info">
+						<div>
+							<h3 class="candidate-name">{{ item.candidate_name }}</h3>
+							<div class="candidate-position">{{ item.position }}</div>
+						</div>
+					</div>
+					<div class="approval-status">{{ item.current_status }}</div>
+				</div>
+				<div class="approval-body">
+					<div class="approval-message">Decision Timeline</div>
+					<div style="display:flex; gap:25px; flex-wrap:wrap; font-size:12px;">
+						{% for st in item.timeline %}
+							<div style="min-width:140px;">
+								<div style="font-weight:600; color:#333;">{{ loop.index }}. {{ st.stage }}</div>
+								{% if st.completed %}
+									<div style="color:#4a6;">{{ st.actor }}{% if st.is_user %} (You){% endif %}</div>
+									<div style="color:#666;">{{ st.at.split('T')[0] }}</div>
+								{% else %}
+									<div style="color:#bbb; font-style:italic;">Pending</div>
+								{% endif %}
+							</div>
+						{% endfor %}
+					</div>
+					<div class="action-buttons" style="margin-top:10px;">
+						<a href="{{ url_for('candidate_profile', candidate_id=item.candidate_id) }}" class="btn btn-view">👤 View Profile</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="no-approvals"><h3>No Recent Decisions</h3><p>No approval decisions recorded yet.</p></div>
+	{% endif %}
+</div>
+
+<div class="section">
+	<div class="section-header">
+		<div class="section-title">ℹ️ Other Decisions {% if other_completed_approvals %}<span class="priority-badge">{{ other_completed_approvals|length }} Info</span>{% endif %}</div>
+	</div>
+	{% if other_completed_approvals %}
+		{% for approval in other_completed_approvals[:10] %}
+			<div class="approval-card">
+				<div class="approval-header">
+					<div class="candidate-info">
+						<div>
+							<h3 class="candidate-name">{{ approval.candidate_name }}</h3>
+							<div class="candidate-position">{{ approval.position }}</div>
+						</div>
+					</div>
+					<div class="approval-status status-{{ approval.status.lower().replace(' ','-') }}">{{ approval.status }}</div>
+				</div>
+				<div class="approval-body">
+					<div class="approval-message">{{ approval.message }}</div>
+					<div class="completed-info">
+						<div class="meta-item"><span class="meta-label">Decision by:</span> {{ approval.approved_by or 'System' }}</div>
+						<div class="meta-item"><span class="meta-label">Date:</span> {{ (approval.approved_at or approval.timestamp).split('T')[0] }}</div>
+					</div>
+					<div class="action-buttons">
+						<a href="{{ url_for('candidate_profile', candidate_id=approval.candidate_id) }}" class="btn btn-view">👤 View Profile</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="no-approvals"><h3>No Other Decisions</h3><p>No decisions from other roles yet.</p></div>
+	{% endif %}
+</div>
+
+<script>
+// Auto-refresh every 60 seconds to show new approvals
+setTimeout(()=>location.reload(),60000);
+</script>
+
+{% endblock %}
