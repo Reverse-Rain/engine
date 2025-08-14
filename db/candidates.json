@@ -751,7 +751,7 @@
         "email": "yoshidawang@hotmail.com",
         "phone": "+971-50-1319132",
         "position": "SP3D Designer",
-        "status": "Selected",
+        "status": "Pending Operations Hire",
         "resume_link": "",
         "cv_path": "resumes/cv_2962628.pdf",
         "applied_date": "2025-02-27",
@@ -778,10 +778,10 @@
         "github": null,
         "match_score": 5,
         "job_id": "3",
-        "status_updated_by": "sara",
-        "status_updated_by_role": "User",
-        "status_updated_at": "2025-08-12T08:13:20.719441",
-        "previous_status": "Pending Dept Selection",
+        "status_updated_by": "system",
+        "status_updated_by_role": "System",
+        "status_updated_at": "2025-08-13T10:53:43.263500+00:00",
+        "previous_status": "Selected",
         "status_history": [
             {
                 "from_status": "None",
@@ -814,6 +814,14 @@
                 "updated_by_role": "User",
                 "updated_at": "2025-08-12T08:13:20.719441",
                 "update_type": "manual_status_update"
+            },
+            {
+                "from_status": "Selected",
+                "to_status": "Pending Operations Hire",
+                "updated_by": "system",
+                "updated_by_role": "System",
+                "updated_at": "2025-08-13T10:53:43.263500+00:00",
+                "update_type": "auto_pending_escalation"
             }
         ],
         "shortlisted_date": "2025-03-03",
@@ -1124,7 +1132,7 @@
         "email": "anita48@yahoo.com",
         "phone": "252.506.3378",
         "position": "SPI Designer",
-        "status": "Selected",
+        "status": "Pending Operations Hire",
         "resume_link": "",
         "cv_path": "resumes/cv_1777320.docx",
         "applied_date": "2025-05-07",
@@ -1150,10 +1158,10 @@
         "github": null,
         "match_score": 7,
         "job_id": "9",
-        "status_updated_by": "sara",
-        "status_updated_by_role": "Department Manager (MOE)",
-        "status_updated_at": "2025-08-12T11:02:57.741826",
-        "previous_status": "Pending Dept Selection",
+        "status_updated_by": "system",
+        "status_updated_by_role": "System",
+        "status_updated_at": "2025-08-13T11:06:55.709021+00:00",
+        "previous_status": "Selected",
         "status_history": [
             {
                 "from_status": "None",
@@ -1202,6 +1210,14 @@
                 "updated_by_role": "Department Manager (MOE)",
                 "updated_at": "2025-08-12T11:02:57.741826",
                 "update_type": "approval_decision"
+            },
+            {
+                "from_status": "Selected",
+                "to_status": "Pending Operations Hire",
+                "updated_by": "system",
+                "updated_by_role": "System",
+                "updated_at": "2025-08-13T11:06:55.709021+00:00",
+                "update_type": "auto_pending_escalation"
             }
         ],
         "shortlisted_date": "2025-08-11",

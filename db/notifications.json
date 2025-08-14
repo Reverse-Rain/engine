@@ -515,5 +515,43 @@
         "action_required": true,
         "notification_type": "pop_up",
         "read_at": "2025-08-12T12:03:25.920692+00:00"
+    },
+    {
+        "id": 25,
+        "candidate_id": 8,
+        "candidate_name": "Wang Yoshida",
+        "position": "SP3D Designer",
+        "type": "reminder_pending_operations_hire",
+        "status": "Pending",
+        "for_role": "Operation Manager",
+        "receiver_username": null,
+        "receiver_user_id": null,
+        "from_role": "User",
+        "from_user": "system",
+        "message": "REMINDER: Candidate Wang Yoshida awaiting Operations Manager hire decision.",
+        "timestamp": "2025-08-13T10:53:43.268710+00:00",
+        "created_by": "system",
+        "priority": "high",
+        "action_required": true,
+        "notification_type": "pop_up"
+    },
+    {
+        "id": 26,
+        "candidate_id": 12,
+        "candidate_name": "Anita Petit",
+        "position": "SPI Designer",
+        "type": "reminder_pending_operations_hire",
+        "status": "Pending",
+        "for_role": "Operation Manager",
+        "receiver_username": null,
+        "receiver_user_id": null,
+        "from_role": "User",
+        "from_user": "system",
+        "message": "REMINDER: Candidate Anita Petit awaiting Operations Manager hire decision.",
+        "timestamp": "2025-08-13T11:06:55.709655+00:00",
+        "created_by": "system",
+        "priority": "high",
+        "action_required": true,
+        "notification_type": "pop_up"
     }
 ]

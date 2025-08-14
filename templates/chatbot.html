@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #fafbfc;
+      color: #222;
+    }
+
+    .chat-container {
+      height: 100vh;
+      max-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #f9f9f9;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 18px;
+      border-bottom: 1px solid #eee;
+      font-size: 1.3em;
+      font-weight: 600;
+      text-align: center;
+      background: #fafafa;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 18px;
+      overflow-y: auto;
+      max-height: calc(100vh - 120px);
+      min-height: 0;
+    }
+
+    .message {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.3s forwards;
+    }
+
+    .message.user {
+      align-items: flex-end;
+    }
+
+    .message.bot {
+      align-items: flex-start;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .bubble {
+      padding: 12px 18px;
+      border-radius: 18px;
+      max-width: 80%;
+      font-size: 1em;
+      background: #f5f5f5;
+      color: #222;
+      white-space: pre-wrap;
+    }
+
+    .message.user .bubble {
+      background: #e0e7ff;
+    }
+
+    .chat_a {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      background: #fafafa;
+      border-top: 1px solid #eee;
+      flex-shrink: 0;
+      min-height: 60px;
+      position: relative;
+    }
+
+    .chat-input-area {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .send-btn {
+      margin-left: 10px;
+      margin-right: 70px;
+      padding: 0 22px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      color: #222;
+      transition: background 0.2s;
+    }
+
+    .send-btn:hover {
+      background: #f0f0f0;
+    }
+
+    /* Analytics Quick Action Buttons */
+    .analytics-btn {
+      backdrop-filter: blur(8px);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.85em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .analytics-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
+
+    .analytics-btn:active {
+      transform: translateY(0px);
+    }
+
+    .dot-loader {
+      display: inline-block;
+      width: 32px;
+      text-align: left;
+    }
+
+    .dot-loader span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin: 0 2px;
+      background: #888;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: dotBounce 1.2s infinite;
+    }
+
+    .dot-loader span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .dot-loader span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.6; }
+      40% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    .chat-bg-center {
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 1;
+      transition: all 0.3s ease;
+    }
+
+    /* When analytics panel is open, move to top */
+    .chat-bg-center.analytics-open {
+      justify-content: flex-start;
+      padding-top: 60px;
+    }
+
+    .chat-bg-center.analytics-open .blob-anim {
+      width: 120px !important;
+      height: 120px !important;
+      margin-bottom: 12px !important;
+    }
+
+    .chat-bg-center.analytics-open .blob-anim img {
+      width: 50px !important;
+      height: 50px !important;
+    }
+
+    .chat-bg-center.analytics-open .prompt-text {
+      font-size: 1em !important;
+      margin-top: -50px !important;
+    }
+    .blob-anim {
+      width: 320px;
+      height: 320px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+      filter: none;
+    }
+    .blob-anim img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      pointer-events: none;
+      filter: none;
+    }
+    .chat-messages.has-content ~ .chat-bg-center {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .chat-messages:not(.has-content) ~ .chat-bg-center {
+      opacity: 1;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .chat-bg-center .prompt-text {
+      font-size: 1.25em;
+      color: #1976d2;
+      font-weight: 600;
+      text-shadow: 0 2px 8px #fff, 0 1px 2px #1976d2;
+      letter-spacing: 0.01em;
+      text-align: center;
+      z-index: 3;
+      opacity: 0.6;
+    }
+
+    /* Analytics Panel Slider Styles */
+    .analytics-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid #e0e0e0;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transform: translateY(0); /* Show by default */
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .analytics-panel.hidden {
+      transform: translateY(100%); /* Hide when .hidden class is added */
+    }
+
+    .analytics-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .analytics-panel-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .analytics-toggle-btn {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.2s;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .analytics-toggle-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #333;
+    }
+
+    .analytics-panel-content {
+      padding: 20px;
+    }
+
+    .analytics-floating-toggle {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
+      transition: all 0.3s;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1; /* Always visible for testing */
+      pointer-events: auto;
+    }
+
+    .analytics-floating-toggle.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .analytics-floating-toggle:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+    }
+
+    /* Image Popup Styles */
+    .image-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .image-popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .image-popup-container {
+      position: relative;
+      max-width: 70%;
+      max-height: 70%;
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .image-popup-overlay.active .image-popup-container {
+      transform: scale(1);
+    }
+
+    .image-popup-img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      /* Set reasonable maximum dimensions */
+      max-width: 800px;
+      max-height: 600px;
+    }
+
+    .image-popup-close {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s ease;
+      color: #333;
+    }
+
+    .image-popup-close:hover {
+      background: #fff;
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-popup-close:active {
+      transform: scale(0.95);
+    }
+
+    /* Make images in chat clickable */
+    .bubble img {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 8px;
+    }
+
+    .bubble img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="chat-container">
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-bg-center" id="chat-bg-center">
+     <div class="blob-anim" style="position:relative; width:320px; height:320px; margin-bottom:18px;">
+        <!-- <img src="{{ url_for('static', filename='images/blob.gif') }}" alt="Animated Smoke" style="width:100%;height:100%;object-fit:cover;position:absolute;left:0;top:0;z-index:1;pointer-events:none;" /> -->
+        <img src="{{ url_for('static', filename='images/chatbot.png') }}" alt="" style="width: 100px; height: 100px;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%); opacity: 0.2;" />
+        
+      </div> 
+            <div class="prompt-text" style="margin-top: -100px;">Ask anything</div>
+
+      
+    </div>
+    
+    <!-- Analytics Panel (Hidden by default, slides from bottom) -->
+    <div id="analytics-panel" class="analytics-panel">
+      <div class="analytics-panel-header">
+        <div class="analytics-panel-title">
+          📈 HR Analytics Insights
+        </div>
+        <button class="analytics-toggle-btn" onclick="toggleAnalyticsPanel()">
+          ⬆️
+        </button>
+      </div>
+      
+      <div class="analytics-panel-content">
+        <!-- Quick Actions -->
+        <div style="margin-bottom:20px;">
+          <div style="text-align:center;color:#666;font-size:0.9em;font-weight:600;margin-bottom:10px;">📊 Quick Actions</div>
+          <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+            <button id="recent-activities-btn" style="backdrop-filter: blur(8px); background: rgba(255,255,255,0.7); border: 1px solid #e0e7ff; color: #1976d2; border-radius: 8px; padding: 10px 20px; font-size: 0.9em; font-weight: 500; box-shadow: 0 2px 8px #e0e7ff33; cursor: pointer; transition: all 0.2s;">🕑 Recent Activities</button>
+            <button id="upcoming-events-btn" style="backdrop-filter: blur(8px); background: rgba(255,255,255,0.7); border: 1px solid #e0e7ff; color: #1976d2; border-radius: 8px; padding: 10px 20px; font-size: 0.9em; font-weight: 500; box-shadow: 0 2px 8px #e0e7ff33; cursor: pointer; transition: all 0.2s;">📅 Upcoming Events</button>
+          </div>
+        </div>
+
+        <!-- HR Analytics Quick Actions Section -->
+        <div style="margin-bottom:20px;">
+          <div style="text-align:center;color:#666;font-size:0.9em;font-weight:600;margin-bottom:10px;">📈 Analytics Insights</div>
+          
+          <!-- Row 1: Core Metrics -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <button id="hiring-success-btn" onclick="sendInsightQuery('Show me our hiring success rate')" class="analytics-btn" style="background: rgba(255,248,240,0.8); border: 1px solid #ffcc80; color: #e65100; box-shadow: 0 2px 8px rgba(255,152,0,0.2);">
+              📊 Loading...
+            </button>
+            <button id="monthly-trends-btn" onclick="sendInsightQuery('Analyze monthly hiring performance trends')" class="analytics-btn" style="background: rgba(240,248,255,0.8); border: 1px solid #90caf9; color: #1565c0; box-shadow: 0 2px 8px rgba(33,150,243,0.2);">
+              📅 Loading...
+            </button>
+          </div>
+          
+          <!-- Row 2: Department & Performance -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <button id="department-efficiency-btn" onclick="sendInsightQuery('Show department interview efficiency')" class="analytics-btn" style="background: rgba(248,255,248,0.8); border: 1px solid #a5d6a7; color: #2e7d32; box-shadow: 0 2px 8px rgba(76,175,80,0.2);">
+              🏢 Loading...
+            </button>
+            <button id="top-performers-btn" onclick="sendInsightQuery('Who are our top performers?')" class="analytics-btn" style="background: rgba(255,245,240,0.8); border: 1px solid #ffab91; color: #d84315; box-shadow: 0 2px 8px rgba(255,87,34,0.2);">
+              🏆 Loading...
+            </button>
+          </div>
+          
+          <!-- Row 3: Predictions & Salary -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <button id="hiring-predictions-btn" onclick="sendInsightQuery('How long to hire 20 more employees?')" class="analytics-btn" style="background: rgba(250,245,255,0.8); border: 1px solid #ce93d8; color: #7b1fa2; box-shadow: 0 2px 8px rgba(156,39,176,0.2);">
+              🔮 Loading...
+            </button>
+            <button id="salary-trends-btn" onclick="sendInsightQuery('Analyze salary trends and competitiveness')" class="analytics-btn" style="background: rgba(255,250,245,0.8); border: 1px solid #ffcc80; color: #ef6c00; box-shadow: 0 2px 8px rgba(255,152,0,0.2);">
+              💰 Loading...
+            </button>
+          </div>
+          
+          <!-- Row 4: Process Insights -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <button id="onboarding-insights-btn" onclick="sendInsightQuery('Show onboarding process insights')" class="analytics-btn" style="background: rgba(245,255,245,0.8); border: 1px solid #81c784; color: #388e3c; box-shadow: 0 2px 8px rgba(76,175,80,0.2);">
+              🚀 Loading...
+            </button>
+            <button id="probation-analysis-btn" onclick="sendInsightQuery('Analyze probation performance by department')" class="analytics-btn" style="background: rgba(245,248,255,0.8); border: 1px solid #90caf9; color: #1976d2; box-shadow: 0 2px 8px rgba(33,150,243,0.2);">
+              📋 Loading...
+            </button>
+          </div>
+          
+          <!-- Row 5: Market Analysis -->
+          <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:12px;">
+            <button id="market-comparison-btn" onclick="sendInsightQuery('Compare our salaries with market rates')" class="analytics-btn" style="background: rgba(255,245,250,0.8); border: 1px solid #f8bbd9; color: #c2185b; box-shadow: 0 2px 8px rgba(233,30,99,0.2);">
+              🏪 Loading...
+            </button>
+          </div>
+        </div>
+
+        <!-- HR Analytics Quick Actions Section -->
+      </div>
+    </div>
+    
+    <div class="chat_a">
+      <!-- Analytics Toggle Button -->
+      <button id="analytics-floating-toggle" class="analytics-floating-toggle" onclick="toggleAnalyticsPanel()">
+        📈
+      </button>
+      <form class="chat-input-area" id="chat-form" autocomplete="off">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." required />
+        <button type="submit" class="send-btn">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Image Popup Modal -->
+  <div id="image-popup" class="image-popup-overlay" onclick="closeImagePopup()">
+    <div class="image-popup-container" onclick="event.stopPropagation()">
+      <img id="popup-image" class="image-popup-img" src="" alt="Full size image">
+      <button class="image-popup-close" onclick="closeImagePopup()">✕</button>
+    </div>
+  </div>
+
+
+  <script>
+    // Quick Action: Recent Activities
+    document.getElementById('recent-activities-btn').addEventListener('click', async function() {
+      const loaderDiv = document.createElement('div');
+      loaderDiv.className = 'message bot';
+      const loaderBubble = document.createElement('div');
+      loaderBubble.className = 'bubble';
+      const loader = document.createElement('div');
+      loader.className = 'dot-loader';
+      loader.innerHTML = '<span></span><span></span><span></span>';
+      loaderBubble.appendChild(loader);
+      loaderDiv.appendChild(loaderBubble);
+      chatMessages.appendChild(loaderDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      updateBgVisibility();
+      try {
+        const res = await fetch('/recent_activities?format=json');
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        if (res.ok) {
+          const data = await res.json();
+          let msg = '<b>📋 Recent Activities:</b><br><br>';
+          
+          if (data.recent_activities && data.recent_activities.length > 0) {
+            msg += '<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 8px 0;">';
+            
+            // Show most recent activities from today first if any
+            if (data.todays_activities && data.todays_activities.length > 0) {
+              msg += '<h4 style="margin: 0 0 8px 0; color: #1976d2;">📅 Today\'s Latest Activities (showing 5 of ' + data.todays_activities.length + ')</h4>';
+              for (let i = 0; i < Math.min(data.todays_activities.length, 5); i++) {
+                const act = data.todays_activities[i];
+                let time = act.date || act.timestamp || act.time || '';
+                if (time.includes(' ')) time = time.split(' ')[1].substring(0, 5); // Get just time part HH:MM
+                msg += '<div style="margin: 4px 0; padding: 6px; background: #e3f2fd; border-radius: 4px;">';
+                msg += '<span style="color: #1565c0; font-weight: 500;">' + (act.description || 'Activity') + '</span>';
+                if (act.user && act.user !== 'Unknown' && act.user.trim()) {
+                  msg += '<br><small style="color: #666;">by ' + act.user + (time ? ' at ' + time : '') + '</small>';
+                } else if (time) {
+                  msg += '<br><small style="color: #666;">at ' + time + '</small>';
+                }
+                msg += '</div>';
+              }
+              
+              // Add "See More" button if there are more than 5 activities
+              if (data.todays_activities.length > 5) {
+                msg += '<div style="text-align: center; margin: 12px 0;">';
+                msg += '<button onclick="showAllTodaysActivities()" style="background: linear-gradient(135deg, #1976d2, #1565c0); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.9em; cursor: pointer; box-shadow: 0 2px 4px rgba(25,118,210,0.3); transition: all 0.2s; font-weight: 500;">';
+                msg += '👁️ See All ' + data.todays_activities.length + ' Today\'s Activities';
+                msg += '</button>';
+                msg += '</div>';
+              }
+              
+              msg += '<br>';
+            }
+            
+            // Show recent activities (mix of today and previous days)
+            msg += '<h4 style="margin: 0 0 8px 0; color: #388e3c;">🕒 Recent Activities (last 8)</h4>';
+            for (let i = 0; i < Math.min(data.recent_activities.length, 8); i++) {
+              const act = data.recent_activities[i];
+              let time = act.date || act.timestamp || act.time || '';
+              let displayTime = time;
+              if (time.includes(' ')) {
+                const parts = time.split(' ');
+                const datePart = parts[0];
+                const timePart = (parts[1] || '').substring(0, 5); // HH:MM
+                // If it's today's date, just show time, otherwise show date + time
+                const today = new Date().toISOString().split('T')[0];
+                if (datePart === today) {
+                  displayTime = timePart;
+                } else {
+                  displayTime = datePart + ' ' + timePart;
+                }
+              }
+              msg += '<div style="margin: 4px 0; padding: 6px; background: #f1f8e9; border-radius: 4px;">';
+              msg += '<span style="color: #2e7d32; font-weight: 500;">' + (act.description || 'Activity') + '</span>';
+              if (act.user && act.user !== 'Unknown' && act.user.trim()) {
+                msg += '<br><small style="color: #666;">by ' + act.user + (displayTime ? ' - ' + displayTime : '') + '</small>';
+              } else if (displayTime) {
+                msg += '<br><small style="color: #666;">' + displayTime + '</small>';
+              }
+              msg += '</div>';
+            }
+            
+            msg += '</div>';
+            
+            // Add activity stats if available
+            if (data.activity_stats) {
+              msg += '<br><div style="background: #fff3e0; padding: 10px; border-radius: 6px; border-left: 4px solid #ff9800;">';
+              msg += '<b>📊 Activity Summary:</b><br>';
+              msg += '• Total Recent: ' + (data.activity_stats.total_recent || 0) + '<br>';
+              msg += '• Today\'s Total: ' + (data.activity_stats.total_today || 0) + '<br>';
+              msg += '• Candidate Activities: ' + (data.activity_stats.candidate_activities || 0) + '<br>';
+              msg += '• Job Activities: ' + (data.activity_stats.job_activities || 0) + '<br>';
+              msg += '• Analytics Usage: ' + (data.activity_stats.analytics_usage || 0);
+              msg += '</div>';
+            }
+          } else {
+            msg += '<div style="padding: 20px; text-align: center; color: #666;">No recent activities found.</div>';
+          }
+          
+          appendMessage(msg, 'bot');
+        } else {
+          appendMessage('❌ Error: Unable to fetch recent activities. Server responded with status ' + res.status, 'bot');
+        }
+      } catch (err) {
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        appendMessage('Error: Unable to connect to server. ' + (err.message || err), 'bot');
+      }
+    });
+
+    // Function to show all today's activities
+    async function showAllTodaysActivities() {
+      const loaderDiv = document.createElement('div');
+      loaderDiv.className = 'message bot';
+      const loaderBubble = document.createElement('div');
+      loaderBubble.className = 'bubble';
+      const loader = document.createElement('div');
+      loader.className = 'dot-loader';
+      loader.innerHTML = '<span></span><span></span><span></span>';
+      loaderBubble.appendChild(loader);
+      loaderDiv.appendChild(loaderBubble);
+      chatMessages.appendChild(loaderDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      updateBgVisibility();
+      
+      try {
+        const res = await fetch('/recent_activities?format=json');
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        
+        if (res.ok) {
+          const data = await res.json();
+          let msg = '<b>📅 All Today\'s Activities (' + (data.todays_activities ? data.todays_activities.length : 0) + ')</b><br><br>';
+          
+          if (data.todays_activities && data.todays_activities.length > 0) {
+            msg += '<div style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; margin: 8px 0; max-height: 400px; overflow-y: auto; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">';
+            
+            data.todays_activities.forEach((act, index) => {
+              let time = act.date || act.timestamp || act.time || '';
+              if (time.includes(' ')) time = time.split(' ')[1].substring(0, 5); // Get just time part HH:MM
+              
+              // Clean white list design with subtle borders
+              msg += '<div style="padding: 12px 16px; border-bottom: 1px solid #f5f5f5; ' + (index === data.todays_activities.length - 1 ? 'border-bottom: none;' : '') + '">';
+              
+              // Activity description
+              msg += '<div style="color: #333; font-weight: 500; font-size: 0.95em; margin-bottom: 4px;">' + (act.description || 'Activity') + '</div>';
+              
+              // Time and user info in a subtle gray
+              let metaInfo = [];
+              if (time) metaInfo.push('⏰ ' + time);
+              if (act.user && act.user !== 'Unknown' && act.user.trim()) metaInfo.push('👤 ' + act.user);
+              
+              if (metaInfo.length > 0) {
+                msg += '<div style="color: #666; font-size: 0.85em; margin-bottom: 6px;">' + metaInfo.join(' • ') + '</div>';
+              }
+              
+              // Activity type badge - simple and minimal
+              if (act.entity_type) {
+                const typeStyles = {
+                  'chat': 'background: #f8f9fa; color: #495057; border: 1px solid #dee2e6;',
+                  'analytics': 'background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb;', 
+                  'job': 'background: #e8f5e8; color: #2e7d32; border: 1px solid #c8e6c9;',
+                  'candidate': 'background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7;',
+                  'interview': 'background: #ffebee; color: #c62828; border: 1px solid #ffcdd2;',
+                  'onboarding': 'background: #efebe9; color: #5d4037; border: 1px solid #d7ccc8;'
+                };
+                const typeStyle = typeStyles[act.entity_type] || 'background: #f5f5f5; color: #616161; border: 1px solid #e0e0e0;';
+                msg += '<span style="display: inline-block; ' + typeStyle + ' padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">' + (act.entity_type || 'general') + '</span>';
+              }
+              
+              msg += '</div>';
+            });
+            
+            msg += '</div>';
+            
+            // Clean summary box
+            msg += '<br><div style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px; border-radius: 6px; border-left: 4px solid #28a745;">';
+            msg += '<div style="color: #495057; font-weight: 500;">📊 Summary</div>';
+            msg += '<div style="color: #6c757d; font-size: 0.9em; margin-top: 4px;">Total of ' + data.todays_activities.length + ' activities recorded today</div>';
+            msg += '</div>';
+          } else {
+            msg += '<div style="padding: 20px; text-align: center; color: #666; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px;">No activities found for today.</div>';
+          }
+          
+          appendMessage(msg, 'bot');
+        } else {
+          appendMessage('❌ Error: Unable to fetch all today\'s activities. Server responded with status ' + res.status, 'bot');
+        }
+      } catch (err) {
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        appendMessage('❌ Error: Unable to connect to server. ' + (err.message || err), 'bot');
+      }
+    }
+
+    // Quick Action: Upcoming Events (send prompt to bot)
+    document.getElementById('upcoming-events-btn').addEventListener('click', async function() {
+      const loaderDiv = document.createElement('div');
+      loaderDiv.className = 'message bot';
+      const loaderBubble = document.createElement('div');
+      loaderBubble.className = 'bubble';
+      const loader = document.createElement('div');
+      loader.className = 'dot-loader';
+      loader.innerHTML = '<span></span><span></span><span></span>';
+      loaderBubble.appendChild(loader);
+      loaderDiv.appendChild(loaderBubble);
+      chatMessages.appendChild(loaderDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      updateBgVisibility();
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: 'Show me the upcoming events.' })
+        });
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        if (response.ok) {
+          const data = await response.json();
+          appendMessage(data.reply, 'bot');
+        } else {
+          appendMessage('Error: Unable to get upcoming events.', 'bot');
+        }
+      } catch (err) {
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        appendMessage('Error: Unable to connect to server. ' + (err.message || err), 'bot');
+      }
+    });
+
+    // Quick Action Buttons
+    // Helper function for HR insight buttons
+    async function sendInsightQuery(query) {
+      const loaderDiv = document.createElement('div');
+      loaderDiv.className = 'message bot';
+      const loaderBubble = document.createElement('div');
+      loaderBubble.className = 'bubble';
+      const loader = document.createElement('div');
+      loader.className = 'dot-loader';
+      loader.innerHTML = '<span></span><span></span><span></span>';
+      loaderBubble.appendChild(loader);
+      loaderDiv.appendChild(loaderBubble);
+      chatMessages.appendChild(loaderDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      updateBgVisibility();
+      
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: query })
+        });
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        if (response.ok) {
+          const data = await response.json();
+          appendMessage(data.reply, 'bot');
+        } else {
+          appendMessage('Error: Unable to get insights.', 'bot');
+        }
+      } catch (err) {
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        appendMessage('Error: Unable to connect to server. ' + (err.message || err), 'bot');
+      }
+    }
+
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+
+    function updateBgVisibility() {
+      const hasContent = chatMessages.children.length > 0;
+      if (hasContent) {
+        chatMessages.classList.add('has-content');
+      } else {
+        chatMessages.classList.remove('has-content');
+      }
+    }
+    updateBgVisibility();
+
+    function appendMessage(text, sender, isTyping = false) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'message ' + sender;
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      msgDiv.appendChild(bubble);
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      updateBgVisibility();
+
+      if (sender === 'bot' && !isTyping) {
+        typeHTML(bubble, text, 10);
+      } else {
+        bubble.innerHTML = text;
+        // Make images clickable for non-typing messages
+        makeImagesClickable(bubble);
+      }
+    }
+
+    // Image Popup Functions
+    function openImagePopup(imageSrc) {
+      const popup = document.getElementById('image-popup');
+      const popupImage = document.getElementById('popup-image');
+      
+      popupImage.src = imageSrc;
+      popup.classList.add('active');
+      
+      // Prevent body scroll when popup is open
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImagePopup() {
+      const popup = document.getElementById('image-popup');
+      popup.classList.remove('active');
+      
+      // Restore body scroll
+      document.body.style.overflow = '';
+    }
+
+    function makeImagesClickable(container) {
+      const images = container.querySelectorAll('img');
+      images.forEach(img => {
+        // Skip if already has click handler
+        if (img.dataset.clickable) return;
+        
+        img.dataset.clickable = 'true';
+        img.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openImagePopup(this.src);
+        });
+      });
+    }
+
+    // Close popup with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeImagePopup();
+      }
+    });
+
+    function typeHTML(el, html, speed = 10) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const nodes = Array.from(tempDiv.childNodes);
+
+      let i = 0;
+      function typeNextNode() {
+        if (i >= nodes.length) {
+          // After typing is complete, make images clickable
+          makeImagesClickable(el);
+          return;
+        }
+        const node = nodes[i++];
+        const clone = node.cloneNode(true);
+        el.appendChild(clone);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        if (clone.nodeType === Node.TEXT_NODE) {
+          const text = clone.textContent;
+          clone.textContent = '';
+          let j = 0;
+          const interval = setInterval(() => {
+            clone.textContent += text[j++];
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            if (j >= text.length) {
+              clearInterval(interval);
+              typeNextNode();
+            }
+          }, speed);
+        } else {
+          typeNextNode();
+        }
+      }
+
+      typeNextNode();
+    }
+
+    chatForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const userMsg = chatInput.value.trim();
+      if (!userMsg) return;
+      appendMessage(userMsg, 'user');
+      chatInput.value = '';
+      updateBgVisibility();
+
+      const loaderDiv = document.createElement('div');
+      loaderDiv.className = 'message bot';
+      const loaderBubble = document.createElement('div');
+      loaderBubble.className = 'bubble';
+      const loader = document.createElement('div');
+      loader.className = 'dot-loader';
+      loader.innerHTML = '<span></span><span></span><span></span>';
+      loaderBubble.appendChild(loader);
+      loaderDiv.appendChild(loaderBubble);
+      chatMessages.appendChild(loaderDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      updateBgVisibility();
+
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userMsg })
+        });
+
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+
+        if (response.ok) {
+          const data = await response.json();
+          appendMessage(data.reply, 'bot');
+        } else {
+          appendMessage('Error: Unable to get response.', 'bot');
+        }
+      } catch (err) {
+        chatMessages.removeChild(loaderDiv);
+        updateBgVisibility();
+        appendMessage('Error: Unable to connect to server.', 'bot');
+      }
+    });
+
+    // Load Analytics Insights for Quick Action Buttons
+    async function loadAnalyticsInsights() {
+      try {
+        const response = await fetch('/analytics_summary');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.status === 'success') {
+            const data = result.data;
+            
+            // Update button text with actual insights
+            document.getElementById('hiring-success-btn').innerHTML = ` ${data.hiring_success}`;
+            document.getElementById('monthly-trends-btn').innerHTML = ` ${data.monthly}`;
+            document.getElementById('department-efficiency-btn').innerHTML = ` ${data.department}`;
+            document.getElementById('top-performers-btn').innerHTML = ` ${data.top_performers}`;
+            document.getElementById('hiring-predictions-btn').innerHTML = ` ${data.predictions}`;
+            document.getElementById('salary-trends-btn').innerHTML = ` ${data.salary}`;
+            document.getElementById('onboarding-insights-btn').innerHTML = ` ${data.onboarding}`;
+            document.getElementById('probation-analysis-btn').innerHTML = ` ${data.probation}`;
+            document.getElementById('market-comparison-btn').innerHTML = ` ${data.market}`;
+          }
+        }
+      } catch (err) {
+        console.log('Could not load analytics insights:', err);
+        // Fallback to static text if loading fails
+        document.getElementById('hiring-success-btn').innerHTML = ' Hiring Success Rate';
+        document.getElementById('monthly-trends-btn').innerHTML = ' Monthly Trends';
+        document.getElementById('department-efficiency-btn').innerHTML = ' Department Efficiency';
+        document.getElementById('top-performers-btn').innerHTML = ' Top Performers';
+        document.getElementById('hiring-predictions-btn').innerHTML = ' Hiring Predictions';
+        document.getElementById('salary-trends-btn').innerHTML = ' Salary Trends';
+        document.getElementById('onboarding-insights-btn').innerHTML = ' Onboarding Insights';
+        document.getElementById('probation-analysis-btn').innerHTML = ' Probation Analysis';
+        document.getElementById('market-comparison-btn').innerHTML = ' Market Comparison';
+      }
+    }
+
+    // Refresh analytics insights every 30 seconds
+    setInterval(loadAnalyticsInsights, 30000);
+
+    // Analytics Panel Toggle Functionality
+    let isAnalyticsPanelOpen = true; // Start with panel open
+
+    function toggleAnalyticsPanel() {
+      const panel = document.getElementById('analytics-panel');
+      const floatingBtn = document.getElementById('analytics-floating-toggle');
+      const toggleBtn = panel.querySelector('.analytics-toggle-btn');
+      const bgCenter = document.getElementById('chat-bg-center');
+      
+      isAnalyticsPanelOpen = !isAnalyticsPanelOpen;
+      
+      if (isAnalyticsPanelOpen) {
+        // Show panel
+        panel.classList.remove('hidden');
+        floatingBtn.classList.remove('show');
+        toggleBtn.innerHTML = '⬆️';
+        bgCenter.classList.add('analytics-open');
+        // Hide the panel after clicking inside to send query
+        panel.addEventListener('click', function(e) {
+          if (e.target.classList.contains('analytics-btn')) {
+            setTimeout(() => {
+              toggleAnalyticsPanel();
+            }, 300); // Small delay to let the query send
+          }
+        });
+      } else {
+        // Hide panel
+        panel.classList.add('hidden');
+        floatingBtn.classList.add('show');
+        toggleBtn.innerHTML = '⬇️';
+        bgCenter.classList.remove('analytics-open');
+      }
+    }
+
+    // Initialize the panel state on page load
+    function initializeAnalyticsPanel() {
+      const bgCenter = document.getElementById('chat-bg-center');
+      const floatingBtn = document.getElementById('analytics-floating-toggle');
+      
+      // Start with panel open
+      bgCenter.classList.add('analytics-open');
+      floatingBtn.classList.remove('show');
+    }
+
+    // Close analytics panel when clicking outside
+    document.addEventListener('click', function(e) {
+      const panel = document.getElementById('analytics-panel');
+      const floatingBtn = document.getElementById('analytics-floating-toggle');
+      
+      if (isAnalyticsPanelOpen && 
+          !panel.contains(e.target) && 
+          !floatingBtn.contains(e.target)) {
+        toggleAnalyticsPanel();
+      }
+    });
+
+    // Prevent panel from closing when clicking inside
+    document.getElementById('analytics-panel').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // Initialize on page load
+    window.addEventListener('load', function() {
+      loadAnalyticsInsights();
+      initializeAnalyticsPanel();
+    });
+  </script>
+</body>
+</html>
